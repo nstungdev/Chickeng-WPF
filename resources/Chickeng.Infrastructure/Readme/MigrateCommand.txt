@@ -1,0 +1,8 @@
+﻿# add new migration
+Add-Migration InitialCreate
+
+# update migration
+Update-Database
+
+# rollback migration (before run Update-Database)
+Remove-Migration
