@@ -15,9 +15,13 @@ namespace Chickeng.Infrastructure
         public string DbPath { get; init; }
         public ChickengContext()
         {
-            //var folder = Environment.SpecialFolder.LocalApplicationData;
-            //var path = Environment.GetFolderPath(folder);
-            DbPath = "Databases\\chickeng.db";
+            //var folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var path = Path.Combine(folder, "NST\\Data\\chickeng-prod.db");
+            DbPath = path;
+
+            // if debug uncomment this block
+            //DbPath = "Databases\\chickeng.db";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

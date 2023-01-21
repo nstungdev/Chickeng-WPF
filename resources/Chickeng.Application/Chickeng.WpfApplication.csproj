@@ -5,7 +5,14 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>chickeng-logo.ico</ApplicationIcon>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="chickeng-logo.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Modules\" />
