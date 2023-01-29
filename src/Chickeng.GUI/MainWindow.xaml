@@ -1,0 +1,32 @@
+﻿<Window x:Class="Chickeng.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Chickeng.GUI" 
+        xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
+        xmlns:vms="clr-namespace:Chickeng.GUI.ViewModels"
+        xmlns:modules="clr-namespace:Chickeng.GUI.Views.Modules"
+        mc:Ignorable="d"
+        FontSize="14"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="650" Width="900">
+    <Grid Margin="15 20 15 10">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type vms:HomeViewModel}">
+                <modules:HomeView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:VocabularyTableViewModel}">
+                <modules:VocabularyTableView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:PhraseTableViewModel}">
+                <modules:PhraseTableView />
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ContentControl Content="{Binding CurrentViewModel}" />
+    </Grid>
+</Window>

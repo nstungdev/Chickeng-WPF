@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="Chickeng.GUI.Views.Shared.MenuCardUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chickeng.GUI.Views.Shared"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d">
+    <Border Name="bdr_container"
+            BorderThickness="2" 
+            BorderBrush="#2B3467"
+            Cursor="Hand"
+            CornerRadius="8"
+            Padding="5">
+        <Border.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+        </Border.Resources>
+
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="MouseLeftButtonUp" SourceObject="{Binding ElementName=bdr_container}">
+                <behaviors:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MenuCardUC}}, Path=Command}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+        
+        <!--Border Style-->
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="#5F9DF7" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#FF0F50B1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="1"
+                       Name="txt_title"
+                       FontWeight="DemiBold"/>
+
+            <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       Name="txt_subhead"
+                       Text="16 items"
+                       FontStyle="Italic"/>
+
+            <Border Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Name="bdr_wrapee"
+                    CornerRadius="20"
+                    Width="{Binding Path=ActualHeight, ElementName=bdr_wrapee}"
+                    Background="#1746A2"
+                    Padding="5"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                <TextBlock Name="txt_badge" 
+                           HorizontalAlignment="Center" />
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
