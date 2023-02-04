@@ -14,13 +14,25 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="Views\UControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Shared\FloatLableMultiLineTextBoxUC.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Shared\FloatLableMultiLineTextBoxUC.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

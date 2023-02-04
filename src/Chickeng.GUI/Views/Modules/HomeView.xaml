@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
+             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
+             xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="900">
     <UserControl.Resources>

@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Chickeng.GUI.Views.Shared.FloatLableMultiLineTextBoxUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Chickeng.GUI.Views.Shared"
+             Loaded="OnLoaded"
+             mc:Ignorable="d">
+    <Grid Name="pnContainer">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition x:Name="rpnTextBoxControlContainer" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Name="lblFloatLabel"
+                   Background="White"
+                   Foreground="#FF3E62D2"
+                   FontWeight="DemiBold"
+                   Margin="8 0 0 0"/>
+
+        <TextBlock Grid.Row="1" 
+                   Name="lblPlaceholder"
+                   VerticalAlignment="Top"
+                   Foreground="DarkGray"
+                   Margin="8 0 0 0"/>
+        
+        <Border Grid.Row="1" 
+                BorderBrush="#86b7fe"
+                Name="brdWrapee"
+                BorderThickness="1"
+                Padding="5"
+                CornerRadius="8">
+            <ScrollViewer Focusable="False"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden">
+                <TextBox BorderThickness="0"
+                         Background="Transparent"
+                         VerticalContentAlignment="Top"
+                         Name="txtMain"
+                         AcceptsReturn="True"
+                         HorizontalScrollBarVisibility="Auto"
+                         VerticalScrollBarVisibility="Auto"
+                         ScrollViewer.CanContentScroll="True"
+                         TextChanged="txtMain_TextChanged"
+                         GotFocus="txtMain_GotFocus"
+                         LostFocus="txtMain_LostFocus"/>
+
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

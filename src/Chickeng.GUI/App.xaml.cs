@@ -25,7 +25,6 @@ namespace Chickeng.GUI
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices(RegisterServices)
                 .Build();
-
         }
 
         public void RegisterServices(HostBuilderContext context, IServiceCollection services)
@@ -43,16 +42,19 @@ namespace Chickeng.GUI
             services.AddTransient<MainViewModel>();
             services.AddTransient<VocabularyTableViewModel>();
             services.AddTransient<PhraseTableViewModel>();
+            services.AddTransient<VocabularyEditViewModel>();
 
             services.AddSingleton<Func<HomeViewModel>>(s => () => s.GetRequiredService<HomeViewModel>());
             services.AddSingleton<Func<VocabularyTableViewModel>>(s => () => s.GetRequiredService<VocabularyTableViewModel>());
             services.AddSingleton<Func<PhraseTableViewModel>>(s => () => s.GetRequiredService<PhraseTableViewModel>());
+            services.AddSingleton<Func<VocabularyEditViewModel>>(s => () => s.GetRequiredService<VocabularyEditViewModel>());
             #endregion
 
             #region DI Service
             services.AddSingleton<NavigationService<HomeViewModel>>();
             services.AddSingleton<NavigationService<VocabularyTableViewModel>>();
             services.AddSingleton<NavigationService<PhraseTableViewModel>>();
+            services.AddSingleton<NavigationService<VocabularyEditViewModel>>();
             services.AddSingleton<NavigationStore>();
             services.AddSingleton(s => new MainWindow()
             {
@@ -71,7 +73,6 @@ namespace Chickeng.GUI
 
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
-
             base.OnStartup(e);
         }
 

@@ -25,6 +25,10 @@
             <DataTemplate DataType="{x:Type vms:PhraseTableViewModel}">
                 <modules:PhraseTableView />
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type vms:VocabularyEditViewModel}">
+                <modules:VocabularyEditView />
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl Content="{Binding CurrentViewModel}" />
