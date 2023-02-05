@@ -7,7 +7,7 @@
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              mc:Ignorable="d"
-             d:DesignHeight="650" d:DesignWidth="900">
+             d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.Resources>
         <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -64,7 +64,7 @@
                                         Grid.Row="2"
                                         Placeholder="Word ..."
                                         Lable="Word"/>
-            
+
             <shared:FloatLableTextBoxUC Grid.Column="3"
                                         Grid.Row="2"
                                         Placeholder="Type ..."
@@ -109,17 +109,20 @@
                           VerticalScrollBarVisibility="Auto">
                 <ListView BorderThickness="0.5"
                           BorderBrush="LightGray">
-                    
+
                 </ListView>
             </ScrollViewer>
-            
+
             <!--Functionality Button-->
             <StackPanel Grid.Row="8"
                         Grid.Column="5"
                         Grid.ColumnSpan="3"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                <Button Content="Refresh" Style="{StaticResource InfoRaisedButton}" />
+                <shared:FloatEffectButtonUC IconColor="Black"
+                                            IconData="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"
+                                            Width="40"
+                                            Height="40"/>
                 <Button Content="Back to home" Margin="5 0 0 0" Style="{StaticResource InfoRaisedButton}" />
             </StackPanel>
         </Grid>

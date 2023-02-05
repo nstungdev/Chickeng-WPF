@@ -1,9 +1,11 @@
-﻿using Chickeng.GUI.Stores;
+﻿using Chickeng.GUI.Commands;
+using Chickeng.GUI.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Chickeng.GUI.ViewModels
 {
@@ -14,7 +16,6 @@ namespace Chickeng.GUI.ViewModels
         public MainViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
@@ -24,7 +25,5 @@ namespace Chickeng.GUI.ViewModels
         }
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-
-
     }
 }

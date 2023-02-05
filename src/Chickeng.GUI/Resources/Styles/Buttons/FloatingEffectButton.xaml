@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="FloatingEffectButton"
+           TargetType="{x:Type Button}">
+
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="(Button.Width)"
+                                         To="45"
+                                         Duration="0:0:0.2"/>
+
+                        <DoubleAnimation Storyboard.TargetProperty="(Button.Height)"
+                                         To="45"
+                                         Duration="0:0:0.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="(Button.Width)"
+                                         To="40"
+                                         Duration="0:0:0.2" />
+
+                        <DoubleAnimation Storyboard.TargetProperty="(Button.Height)"
+                                         To="40"
+                                         Duration="0:0:0.2" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

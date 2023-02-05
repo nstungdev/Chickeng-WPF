@@ -26,5 +26,14 @@ namespace Chickeng.GUI
         {
             InitializeComponent();
         }
+
+        private void Quit(EventArgs obj)
+        {
+            var dialog = MessageBox.Show("Are you sure?", "Exit Chickeng", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (dialog == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

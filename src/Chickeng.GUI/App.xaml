@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Buttons/RaisedButtonDictionary.xaml" />
                 <ResourceDictionary Source="Resources/Styles/FormInputs/BasicInputDictionary.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Buttons/FloatingEffectButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
        

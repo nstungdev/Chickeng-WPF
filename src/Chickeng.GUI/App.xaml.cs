@@ -45,6 +45,7 @@ namespace Chickeng.GUI
             services.AddTransient<VocabularyEditViewModel>();
 
             services.AddSingleton<Func<HomeViewModel>>(s => () => s.GetRequiredService<HomeViewModel>());
+            services.AddSingleton<Func<MainViewModel>>(s => () => s.GetRequiredService<MainViewModel>());
             services.AddSingleton<Func<VocabularyTableViewModel>>(s => () => s.GetRequiredService<VocabularyTableViewModel>());
             services.AddSingleton<Func<PhraseTableViewModel>>(s => () => s.GetRequiredService<PhraseTableViewModel>());
             services.AddSingleton<Func<VocabularyEditViewModel>>(s => () => s.GetRequiredService<VocabularyEditViewModel>());

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="900">
+             d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="FontSize" Value="20" />
@@ -88,7 +88,7 @@
         <StackPanel Grid.Row="1"
               Grid.Column="2"
               Grid.RowSpan="5"
-              Background="WhiteSmoke">
+              Background="Transparent">
             <shared:MenuCardUC Title="Vocabulary" 
                                Subhead="{Binding VocabularyItemCount, StringFormat=\{0\} items}" 
                                Badge="{Binding VocabularyNewItemCount}" 
