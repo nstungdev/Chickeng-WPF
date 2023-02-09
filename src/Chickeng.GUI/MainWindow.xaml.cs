@@ -22,18 +22,30 @@ namespace Chickeng.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly NavigationService<HomeViewModel> _homeNavigationService;
+        public MainWindow(NavigationService<HomeViewModel> homeNavigationService)
         {
             InitializeComponent();
+            _homeNavigationService = homeNavigationService;
         }
 
         private void Quit(EventArgs obj)
         {
+            this.Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             var dialog = MessageBox.Show("Are you sure?", "Exit Chickeng", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (dialog == MessageBoxResult.Yes)
+            if (dialog == MessageBoxResult.No)
             {
-                Application.Current.Shutdown();
+                e.Cancel = true;
             }
+        }
+
+        private void BackToHome(EventArgs obj)
+        {
+            _homeNavigationService.Navigate();
         }
     }
 }

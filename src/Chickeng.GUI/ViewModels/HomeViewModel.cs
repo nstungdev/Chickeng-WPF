@@ -21,6 +21,7 @@ namespace Chickeng.GUI.ViewModels
 
             NavigateVocabularyTableCommand = new VocabularyTableViewAsyncCommand(_navigationVocabularyTableViewService);
             NavigatePhraseTableCommand = new PhraseTableViewAsyncCommands(_navigationPhraseTableViewService);
+            QuitCommand = new QuitApplicationAsyncCommand();
 
             VocabularyItemCount = 100;
             VocabularyNewItemCount = 42;
@@ -32,7 +33,7 @@ namespace Chickeng.GUI.ViewModels
         public int VocabularyNewItemCount { get; set; }
         public int PhraseItemCount { get; set; }
         public int PhraseNewItemCount { get; set; }
-
+        public ICommand QuitCommand { get; set; }
         public ICommand NavigateVocabularyTableCommand { get; }
         public ICommand NavigatePhraseTableCommand { get; }
 

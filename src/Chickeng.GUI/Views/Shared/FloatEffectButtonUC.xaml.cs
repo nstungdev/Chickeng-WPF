@@ -31,7 +31,15 @@ namespace Chickeng.GUI.Views.Shared
         public double EffectHeight => Width + 5;
         public double OriginWidth => Width;
         public double OriginHeigth => Height;
+
         public event Action<EventArgs>? Click;
+
+        public static DependencyProperty CommandProperty = DependencyProperty.Register(
+           "Command",
+           typeof(ICommand),
+           typeof(FloatEffectButtonUC),
+           new PropertyMetadata(null));
+        public ICommand Command { get => (ICommand)GetValue(CommandProperty); set => SetValue(CommandProperty, value); }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -62,7 +70,7 @@ namespace Chickeng.GUI.Views.Shared
             pthIcon.Width = canvas.Width;
         }
 
-        private void pnContainer_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void pnContainer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Click?.Invoke(new EventArgs());
         }

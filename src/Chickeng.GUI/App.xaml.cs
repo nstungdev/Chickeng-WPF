@@ -43,12 +43,14 @@ namespace Chickeng.GUI
             services.AddTransient<VocabularyTableViewModel>();
             services.AddTransient<PhraseTableViewModel>();
             services.AddTransient<VocabularyEditViewModel>();
+            services.AddTransient<PhraseEditViewModel>();
 
             services.AddSingleton<Func<HomeViewModel>>(s => () => s.GetRequiredService<HomeViewModel>());
             services.AddSingleton<Func<MainViewModel>>(s => () => s.GetRequiredService<MainViewModel>());
             services.AddSingleton<Func<VocabularyTableViewModel>>(s => () => s.GetRequiredService<VocabularyTableViewModel>());
             services.AddSingleton<Func<PhraseTableViewModel>>(s => () => s.GetRequiredService<PhraseTableViewModel>());
             services.AddSingleton<Func<VocabularyEditViewModel>>(s => () => s.GetRequiredService<VocabularyEditViewModel>());
+            services.AddSingleton<Func<PhraseEditViewModel>>(s => () => s.GetRequiredService<PhraseEditViewModel>());
             #endregion
 
             #region DI Service
@@ -56,8 +58,9 @@ namespace Chickeng.GUI
             services.AddSingleton<NavigationService<VocabularyTableViewModel>>();
             services.AddSingleton<NavigationService<PhraseTableViewModel>>();
             services.AddSingleton<NavigationService<VocabularyEditViewModel>>();
+            services.AddSingleton<NavigationService<PhraseEditViewModel>>();
             services.AddSingleton<NavigationStore>();
-            services.AddSingleton(s => new MainWindow()
+            services.AddSingleton(s => new MainWindow(s.GetRequiredService<NavigationService<HomeViewModel>>())
             {
                 DataContext = s.GetRequiredService<MainViewModel>()
             });

@@ -12,10 +12,10 @@ namespace Chickeng.GUI.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-
         public MainViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
+            QuitCommand = new QuitApplicationAsyncCommand();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
@@ -23,7 +23,7 @@ namespace Chickeng.GUI.ViewModels
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
-
+        public ICommand QuitCommand { get; set; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
     }
 }
