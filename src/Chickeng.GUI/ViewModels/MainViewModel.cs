@@ -24,6 +24,10 @@ namespace Chickeng.GUI.ViewModels
             OnPropertyChanged(nameof(CurrentViewModel));
         }
         public ICommand QuitCommand { get; set; }
+        public double EffectWidth { get => 40; }
+        public double EffectHeight { get => 40; }
+        public double OriginWidth { get => 35; }
+        public double OriginHeight { get => 35; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
     }
 }

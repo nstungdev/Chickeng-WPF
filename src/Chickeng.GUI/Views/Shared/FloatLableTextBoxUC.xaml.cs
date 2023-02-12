@@ -27,7 +27,16 @@ namespace Chickeng.GUI.Views.Shared
         #region EXPOSE PROPERTIES
         public string? Placeholder { get => lblPlaceholder.Text; set => lblPlaceholder.Text = value; }
         public string? Lable { get => lblFloatLabel.Text; set => lblFloatLabel.Text = value; }
-        public string FormValue { get => txtMain.Text; }
+        public string FormValue 
+        { 
+            get => (string)GetValue(FormValueProperty);
+            set => SetValue(FormValueProperty, value);
+        }
+        public static readonly DependencyProperty FormValueProperty = DependencyProperty.Register(
+            nameof(FormValue),
+            typeof(string),
+            typeof(FloatLableTextBoxUC),
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         #endregion
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

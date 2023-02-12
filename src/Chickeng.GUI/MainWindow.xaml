@@ -73,8 +73,8 @@
 
                         <Grid.Resources>
                             <Style TargetType="shared:FloatEffectButtonUC">
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="Width" Value="35" />
+                                <Setter Property="Height" Value="{Binding OriginHeight}" />
+                                <Setter Property="Width" Value="{Binding OriginWidth}" />
                             </Style>
                         </Grid.Resources>
 

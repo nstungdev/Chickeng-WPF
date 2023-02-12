@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chickeng.GUI.Helpers;
+using Chickeng.GUI.Views.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,21 @@ namespace Chickeng.GUI.Views.Modules
         public VocabularyEditView()
         {
             InitializeComponent();
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            var singleFormControls = WpfControlHelper.FindVisualChilds<FloatLableTextBoxUC>(this);
+            var multiFormControls = WpfControlHelper.FindVisualChilds<FloatLableMultiLineTextBoxUC>(this);
+            foreach (var control in singleFormControls)
+            {
+                control.FormValue = string.Empty;
+            }
+
+            foreach (var control in multiFormControls)
+            {
+                control.FormValue = string.Empty;
+            }
         }
     }
 }

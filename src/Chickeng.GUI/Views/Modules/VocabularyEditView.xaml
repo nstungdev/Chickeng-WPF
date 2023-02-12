@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
+             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              mc:Ignorable="d"
@@ -62,22 +63,26 @@
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="2"
+                                        FormValue="{Binding Word, UpdateSourceTrigger=PropertyChanged}"
                                         Placeholder="Word ..."
                                         Lable="Word"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="3"
                                         Grid.Row="2"
+                                        FormValue="{Binding WordType, UpdateSourceTrigger=PropertyChanged}"
                                         Placeholder="Type ..."
                                         Lable="Type"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="3"
+                                        FormValue="{Binding Mean, UpdateSourceTrigger=PropertyChanged}"
                                         Grid.ColumnSpan="3"
                                         Placeholder="Mean ..."
                                         Lable="Mean"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="4"
+                                        FormValue="{Binding Pronounce, UpdateSourceTrigger=PropertyChanged}"
                                         Grid.ColumnSpan="3"
                                         Placeholder="Pronounce ..."
                                         Lable="Pronounce"/>
@@ -86,12 +91,20 @@
                                         Grid.Row="5"
                                         Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
+                                        FormValue="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
                                         MaxHeight="130"
                                         ControlMaxHeight="130"
                                         Placeholder="Note ..."
                                         Lable="Note">
             </shared:FloatLableMultiLineTextBoxUC>
 
+            <fa:ImageAwesome
+                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                Grid.Row="7"
+                Grid.Column="1"
+                Icon="Spinner" 
+                Spin="True" 
+                SpinDuration="10" />
 
             <!--History Region-->
             <TextBlock Grid.Row="1"
@@ -118,9 +131,14 @@
                         Grid.ColumnSpan="2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                <Button Content="Save" Style="{StaticResource PrimaryRaisedButton}" Margin="0 0 8 0" />
-                <Button Content="Reset" Style="{StaticResource InfoRaisedButton}" Margin="0 0 8 0" />
-                <Button Content="Cancel" Style="{StaticResource InfoOutlineRaisedButton}" />
+                <Button Content="Save" 
+                        Style="{StaticResource PrimaryRaisedButton}" 
+                        Margin="0 0 8 0"
+                        Command="{Binding Submit}"/>
+                <Button Content="Reset"
+                        Name="btnReset"
+                        Style="{StaticResource InfoRaisedButton}"
+                        Click="btnReset_Click"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chickeng.GUI.Models
 {
-    public class Vocabulary
+    public class VocabularyDto
     {
         public string? Word { get; set; }
         public string? Mean { get; set; }

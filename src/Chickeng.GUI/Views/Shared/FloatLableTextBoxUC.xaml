@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Shared"
              Loaded="OnLoaded"
+             x:Name="ucContainer"
              mc:Ignorable="d">
     <Grid Name="pnContainer">
         <Grid.RowDefinitions>
@@ -38,10 +39,10 @@
                          Background="Transparent"
                          VerticalContentAlignment="Center"
                          Name="txtMain"
+                         Text="{Binding Path=FormValue, ElementName=ucContainer}"
                          TextChanged="txtMain_TextChanged"
                          GotFocus="txtMain_GotFocus"
                          LostFocus="txtMain_LostFocus"/>
-
             </ScrollViewer>
         </Border>
     </Grid>

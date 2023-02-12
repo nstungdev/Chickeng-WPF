@@ -12,12 +12,6 @@
           Cursor="Hand"
           MouseLeftButtonUp="pnContainer_MouseLeftButtonUp">
 
-        <Grid.InputBindings>
-            <MouseBinding Gesture="LeftClick"
-                          Command="{Binding Path=Command}"
-                          CommandParameter="" />
-        </Grid.InputBindings>
-        
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Name="canvas"

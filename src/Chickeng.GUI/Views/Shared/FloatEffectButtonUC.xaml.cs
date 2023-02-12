@@ -34,13 +34,6 @@ namespace Chickeng.GUI.Views.Shared
 
         public event Action<EventArgs>? Click;
 
-        public static DependencyProperty CommandProperty = DependencyProperty.Register(
-           "Command",
-           typeof(ICommand),
-           typeof(FloatEffectButtonUC),
-           new PropertyMetadata(null));
-        public ICommand Command { get => (ICommand)GetValue(CommandProperty); set => SetValue(CommandProperty, value); }
-
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             var ucHeight = this.Height;
@@ -54,14 +47,6 @@ namespace Chickeng.GUI.Views.Shared
 
             pthIcon.Height = ucHeight;
             pthIcon.Width = ucWidth;
-
-            DataContext = new
-            {
-                EffectWidth,
-                EffectHeight,
-                OriginWidth,
-                OriginHeigth,
-            };
         }
 
         private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)

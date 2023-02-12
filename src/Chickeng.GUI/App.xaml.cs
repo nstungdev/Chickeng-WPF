@@ -1,5 +1,8 @@
-﻿using Chickeng.GUI.Stores;
+﻿using Chickeng.Domain.Services;
+using Chickeng.GUI.Stores;
 using Chickeng.GUI.ViewModels;
+using Chickeng.Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,6 +41,11 @@ namespace Chickeng.GUI
                 throw new ArgumentNullException("Sqlite connection string was null");
 
             #region DI Func Create ViewModel
+            var connectionStr = configuaration.GetConnectionString("Default");
+            services.AddDbContext<ChickengDbContext>(o => o.UseSqlite(connectionStr), ServiceLifetime.Singleton);
+
+            services.AddTransient<VocabularyService>();
+
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<VocabularyTableViewModel>();
