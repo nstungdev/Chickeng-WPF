@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Resources/Styles/Buttons/RaisedButtonDictionary.xaml" />
                 <ResourceDictionary Source="Resources/Styles/FormInputs/BasicInputDictionary.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Buttons/FloatingEffectButton.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Components/LoadingComponent.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
        

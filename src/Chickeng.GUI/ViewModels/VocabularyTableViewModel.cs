@@ -2,45 +2,95 @@
 using Chickeng.GUI.Commands;
 using Chickeng.GUI.Models;
 using Chickeng.GUI.Stores;
+using Chickeng.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Chickeng.GUI.ViewModels
 {
     public class VocabularyTableViewModel : ViewModelBase
     {
-        private readonly NavigationService<VocabularyEditViewModel> _navigationVocabularyEditViewService;
+        private readonly NavigationService<VocabularyEditViewModel> _navVocaEditService;
         private readonly VocabularyService _vocabularyService;
-        public VocabularyTableViewModel(NavigationService<VocabularyEditViewModel> navigationVocabularyEditViewService,
+        private bool _isLoading = false;
+        private ObservableCollection<VocabularyTableModel>? _vocabularies;
+        public VocabularyTableViewModel(NavigationService<VocabularyEditViewModel> navVocaEditService,
             VocabularyService vocabularyService)
         {
-            _navigationVocabularyEditViewService = navigationVocabularyEditViewService;
+            _navVocaEditService = navVocaEditService;
             _vocabularyService = vocabularyService;
 
-            var v = new Infrastructure.Entities.Vocabulary
-            {
-                Word = "A",
-                Mean = "B",
-                CreatedAt = DateTime.Now,
-                WordType = "C"
-            };
+            // load data into listview
+            LoadResourceCommand = new AsyncCommand(LoadResource);
 
-            Vocabularies = new ObservableCollection<VocabularyDto>()
-            {
-                new VocabularyDto() { Word = "name1", WordType = "verb", Mean = "tên1", CreatedAt = DateTime.Now },
-                new VocabularyDto() { Word = "name2", WordType = "verb", Mean = "tên2", CreatedAt = DateTime.Now },
-                new VocabularyDto() { Word = "name3", WordType = "verb", Mean = "tên3", CreatedAt = DateTime.Now },
-                new VocabularyDto() { Word = "name4", WordType = "verb", Mean = "tên4", CreatedAt = DateTime.Now },
-            };
-            CreateNewWordCommand = new VocabularyEditAsyncCommand(_navigationVocabularyEditViewService);
+            // navigating to Create New Vocabulary Form
+            CreateNewWordCommand = new AsyncCommand(NavigateEditForm);
+
+            // navigating to Update Vocabulary Form
+            EditWordCommand = new AsyncCommand(NavigateEditForm);
+
+            // show message
+            DeleteCommand = new AsyncCommand(DeleteAction);
         }
 
-        public ObservableCollection<VocabularyDto>? Vocabularies { get; set; }
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
+        public ObservableCollection<VocabularyTableModel>? Vocabularies {
+            get => _vocabularies;
+            set
+            {
+                _vocabularies = value;
+                OnPropertyChanged(nameof(Vocabularies));
+                _isLoading = false;
+            }
+        }
         public ICommand CreateNewWordCommand { get; }
+        public ICommand LoadResourceCommand { get; }
+        public ICommand EditWordCommand { get; }
+        public ICommand DeleteCommand { get; }
+
+        #region Private method
+        private async Task LoadResource(object? @param)
+        {
+            IsLoading = true;
+
+            var results = await _vocabularyService.GetAllAsync();
+            Vocabularies = new ObservableCollection<VocabularyTableModel>(results
+                .Select(e => new VocabularyTableModel
+                {
+                    Vocabulary = e,
+                    EditCommand = EditWordCommand,
+                    DeleteCommand = DeleteCommand
+                }));
+
+            IsLoading = false;
+        }
+
+        private Task NavigateEditForm(object? id)
+        {
+            _navVocaEditService.Navigate(id);
+            return Task.CompletedTask;
+        }
+
+        private Task DeleteAction(object? id)
+        {
+            MessageBox.Show("Coming soon", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            return Task.CompletedTask;
+        }
+        #endregion
     }
 }

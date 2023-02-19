@@ -1,4 +1,5 @@
-﻿using Chickeng.Infrastructure.DbContexts;
+﻿using Chickeng.Domain.DTOs;
+using Chickeng.Infrastructure.DbContexts;
 using Chickeng.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,9 +25,29 @@ namespace Chickeng.Domain.Services
         public async Task AddOneAsync(Vocabulary vocabulary)
         {
             await _dbContext.Vocabularies.AddAsync(vocabulary);
-            await Task.Delay(10000);
             await _dbContext.SaveChangesAsync();
             return;
+        }
+
+        public async Task<Vocabulary?> GetOneByIdAsync(int id)
+        {
+            var result = await _dbContext.Vocabularies.FindAsync(id);
+            return result;
+        }
+
+        public async Task UpdateOneAsync(int id, VocabularyDTO vocDto)
+        {
+            var voc = await _dbContext.Vocabularies.FindAsync(id);
+            if (voc == null)
+                throw new ArgumentNullException("Word not found");
+            voc.Word = vocDto.Word;
+            voc.WordType = vocDto.WordType;
+            voc.Mean = vocDto.Mean;
+            voc.Pronounce = vocDto.Pronounce;
+            voc.Note = vocDto.Note;
+            voc.LastUpdatedAt = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -7,6 +7,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.Resources>
@@ -16,6 +17,11 @@
     <ScrollViewer Padding="20"
                   VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Auto">
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadTargetItemCommand}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
         <Grid Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -51,6 +57,16 @@
                     <Setter Property="Margin" Value="0 5 0 0" />
                 </Style>
             </Grid.Resources>
+            
+            <!--Form loading-->
+            <Grid Grid.Row="2"
+                  Grid.RowSpan="7"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+                  Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                  Style="{StaticResource LoadingComponent}">
+                <fa:ImageAwesome />
+            </Grid>
 
             <!--Form Region-->
             <TextBlock Grid.Row="1"
@@ -59,7 +75,7 @@
                        Foreground="#FF3E62D2"
                        FontWeight="DemiBold"
                        HorizontalAlignment="Center"
-                       Text="CREATE NEW VOCABULARY"/>
+                       Text="{Binding Title}"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="2"
@@ -98,14 +114,6 @@
                                         Lable="Note">
             </shared:FloatLableMultiLineTextBoxUC>
 
-            <fa:ImageAwesome
-                Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
-                Grid.Row="7"
-                Grid.Column="1"
-                Icon="Spinner" 
-                Spin="True" 
-                SpinDuration="10" />
-
             <!--History Region-->
             <TextBlock Grid.Row="1"
                        Grid.Column="5"
@@ -134,7 +142,8 @@
                 <Button Content="Save" 
                         Style="{StaticResource PrimaryRaisedButton}" 
                         Margin="0 0 8 0"
-                        Command="{Binding Submit}"/>
+                        Command="{Binding SubmitCommand}"
+                        MouseRightButtonDown="Button_MouseRightButtonDown"/>
                 <Button Content="Reset"
                         Name="btnReset"
                         Style="{StaticResource InfoRaisedButton}"

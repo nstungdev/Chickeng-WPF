@@ -1,11 +1,14 @@
-﻿using Chickeng.Domain.Services;
+﻿using Chickeng.Domain.DTOs;
+using Chickeng.Domain.Services;
 using Chickeng.GUI.Commands;
 using Chickeng.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Chickeng.GUI.ViewModels
@@ -13,13 +16,22 @@ namespace Chickeng.GUI.ViewModels
     public class VocabularyEditViewModel : ViewModelBase
     {
         private readonly VocabularyService _vocabularyService;
+        #region Fields
         private bool _isLoading = false;
         private string? _word { get; set; }
+        private string? _wordType { get; set; }
+        private string? _mean { get; set; }
+        private string? _pronounce { get; set; }
+        private string? _note { get; set; }
+        #endregion
         public VocabularyEditViewModel(VocabularyService vocabularyService)
         {
             _vocabularyService = vocabularyService;
-            Submit = new SubmitVocabularyFormAsyncCommand(_vocabularyService, this);
+
+            LoadTargetItemCommand = new AsyncCommand(LoadTargetItem);
+            SubmitCommand = new AsyncCommand(Submit);
         }
+        #region Properties
         public string? Word 
         {
             get => _word;
@@ -29,6 +41,43 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(Word));
             }
         }
+        public string? WordType 
+        { 
+            get => _wordType; 
+            set 
+            {
+                _wordType = value; 
+                OnPropertyChanged(nameof(WordType)); 
+            } 
+        }
+        public string? Mean 
+        { 
+            get => _mean;
+            set
+            {
+                _mean = value;
+                OnPropertyChanged(nameof(Mean));
+            }
+        }
+        public string? Pronounce 
+        { 
+            get => _pronounce; 
+            set
+            {
+                _pronounce = value;
+                OnPropertyChanged(nameof(Pronounce));
+            } 
+        }
+        public string? Note 
+        { 
+            get => _note; 
+            set
+            {
+                _note = value;
+                OnPropertyChanged(nameof(Note));
+            }
+        }
+        public string Title { get => ReferenceObject == null ? "CREATE NEW VOCABULARY" : "UPDATE VOCABULARY"; }
         public bool IsLoading 
         { 
             get => _isLoading; 
@@ -38,10 +87,68 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
-        public string? WordType { get; set; }
-        public string? Mean { get; set; }
-        public string? Pronounce { get; set; }
-        public string? Note { get; set; }
-        public ICommand? Submit { get; set; }
+        public ICommand SubmitCommand { get; set; }
+        public ICommand LoadTargetItemCommand { get; set; }
+        #endregion
+
+        #region Private Methods
+        private async Task LoadTargetItem(object? param)
+        {
+            if (ReferenceObject != null && int.TryParse(ReferenceObject.ToString(), out var identityValue))
+            {
+                var voc = await _vocabularyService.GetOneByIdAsync(identityValue) ?? throw new NullReferenceException("Word not found");
+                WordType = voc.WordType;
+                Word = voc.Word;
+                Mean = voc.Mean;
+                Pronounce = voc.Pronounce;
+                Note = voc.Note;
+            }
+        }
+        private async Task Submit(object? param)
+        {
+            try
+            {
+                IsLoading = true;
+                // create new vocabulary
+                if (ReferenceObject == null)
+                {
+                    var voc = new Vocabulary
+                    {
+                        Word = _word,
+                        Mean = _mean,
+                        WordType = _wordType,
+                        Pronounce = _pronounce,
+                        TopicId = null,
+                        Note = _note,
+                        CreatedAt = DateTime.Now,
+                        LastUpdatedAt = null
+                    };
+                    await _vocabularyService.AddOneAsync(voc);
+                    MessageBox.Show("Create new vocabulary successfully", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (int.TryParse(ReferenceObject.ToString(), out var id))
+                {
+                    var vocDto = new VocabularyDTO
+                    {
+                        Mean = _mean,
+                        Note = _note,
+                        Pronounce = _pronounce,
+                        Word = _word,
+                        WordType = _wordType
+                    };
+                    await _vocabularyService.UpdateOneAsync(id, vocDto);
+                    MessageBox.Show("Update vocabulary successfully", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Notification", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+        #endregion
     }
 }

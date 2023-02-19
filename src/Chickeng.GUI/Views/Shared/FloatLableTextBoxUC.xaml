@@ -39,7 +39,7 @@
                          Background="Transparent"
                          VerticalContentAlignment="Center"
                          Name="txtMain"
-                         Text="{Binding Path=FormValue, ElementName=ucContainer}"
+                         Text="{Binding FormValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                          TextChanged="txtMain_TextChanged"
                          GotFocus="txtMain_GotFocus"
                          LostFocus="txtMain_LostFocus"/>

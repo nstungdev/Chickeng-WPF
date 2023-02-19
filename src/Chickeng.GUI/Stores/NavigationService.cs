@@ -22,5 +22,12 @@ namespace Chickeng.GUI.Stores
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }
+        
+        public void Navigate(object? param)
+        {
+            var viewModel = _createViewModel();
+            viewModel.ReferenceObject = param;
+            _navigationStore.CurrentViewModel = viewModel;
+        }
     }
 }

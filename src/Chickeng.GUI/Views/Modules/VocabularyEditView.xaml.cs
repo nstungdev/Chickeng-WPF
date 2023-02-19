@@ -41,5 +41,10 @@ namespace Chickeng.GUI.Views.Modules
                 control.FormValue = string.Empty;
             }
         }
+
+        private void Button_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var data = DataContext;
+        }
     }
 }

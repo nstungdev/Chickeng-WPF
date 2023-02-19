@@ -3,11 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
+             xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              FontSize="13"
              d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
+        <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+     
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition />
@@ -30,6 +43,15 @@
                 Content="Create new word"
                 Command="{Binding CreateNewWordCommand}"/>
 
+        <Grid Grid.Row="1"
+              Grid.RowSpan="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="3"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+              Style="{StaticResource LoadingComponent}">
+            <fa:ImageAwesome />
+        </Grid>
+
         <ListView Grid.Row="1"
                   Grid.Column="0"
                   Grid.ColumnSpan="3"
@@ -46,7 +68,7 @@
                     <GridViewColumn Header="Word">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="100" Text="{Binding Word}" />
+                                <TextBlock Width="100" Text="{Binding Vocabulary.Word}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -54,7 +76,7 @@
                     <GridViewColumn Header="Type">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="50" Text="{Binding WordType}" />
+                                <TextBlock Width="50" Text="{Binding Vocabulary.WordType}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -62,7 +84,7 @@
                     <GridViewColumn Header="Mean">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="150" Text="{Binding Mean}" />
+                                <TextBlock Width="150" Text="{Binding Vocabulary.Mean}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -70,7 +92,7 @@
                     <GridViewColumn Header="Pronounce">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="100" Text="{Binding Pronounce}" />
+                                <TextBlock Width="100" Text="{Binding Vocabulary.Pronounce}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -78,7 +100,7 @@
                     <GridViewColumn Header="Created On">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="200" Text="{Binding CreatedAt}" />
+                                <TextBlock Width="200" Text="{Binding Vocabulary.CreatedAt}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -90,9 +112,13 @@
                                     <Button Content="Edit"
                                             Height="30"
                                             Margin="0 0 5 0"
+                                            CommandParameter="{Binding Vocabulary.Id}"
+                                            Command="{Binding EditCommand}"
                                             Style="{StaticResource LightRaisedButton}"/>
                                     <Button Content="Remove"
                                             Height="30"
+                                            CommandParameter="{Binding Vocabulary.Id}"
+                                            Command="{Binding DeleteCommand}"
                                             Style="{StaticResource DangerRaisedButton}"/>
                                 </StackPanel>
                             </DataTemplate>
