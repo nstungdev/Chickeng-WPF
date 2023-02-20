@@ -17,7 +17,8 @@
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
-                <RowDefinition />
+                <RowDefinition SharedSizeGroup="FormControl" />
+                <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
                 <RowDefinition />
@@ -52,37 +53,44 @@
                        Foreground="#FF3E62D2"
                        FontWeight="DemiBold"
                        HorizontalAlignment="Center"
-                       Text="CREATE NEW VOCABULARY"/>
+                       Text="CREATE NEW PHRASE"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
+                                        Grid.ColumnSpan="3"
                                         Grid.Row="2"
-                                        Placeholder="Word ..."
+                                        Placeholder="Content ..."
+                                        FormValue="{Binding Content}"
                                         Lable="Word"/>
-
-            <shared:FloatLableTextBoxUC Grid.Column="3"
-                                        Grid.Row="2"
-                                        Placeholder="Type ..."
-                                        Lable="Type"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="3"
                                         Grid.ColumnSpan="3"
                                         Placeholder="Mean ..."
+                                        FormValue="{Binding Mean}"
                                         Lable="Mean"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="4"
                                         Grid.ColumnSpan="3"
                                         Placeholder="Pronounce ..."
+                                        FormValue="{Binding Pronounce}"
                                         Lable="Pronounce"/>
 
-            <shared:FloatLableMultiLineTextBoxUC Grid.Column="1"
+            <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="5"
+                                        Grid.ColumnSpan="3"
+                                        Placeholder="Tone ..."
+                                        FormValue="{Binding Tone}"
+                                        Lable="Tone"/>
+
+            <shared:FloatLableMultiLineTextBoxUC Grid.Column="1"
+                                        Grid.Row="6"
                                         Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
                                         MaxHeight="130"
                                         ControlMaxHeight="130"
                                         Placeholder="Note ..."
+                                        FormValue="{Binding Note}"
                                         Lable="Note">
             </shared:FloatLableMultiLineTextBoxUC>
 
@@ -96,7 +104,7 @@
                        HorizontalAlignment="Center"
                        Text="HISTORIES"/>
             <ScrollViewer Grid.Row="2"
-                          Grid.RowSpan="5"
+                          Grid.RowSpan="6"
                           Grid.Column="5"
                           Grid.ColumnSpan="3"
                           HorizontalScrollBarVisibility="Auto"
@@ -107,14 +115,18 @@
                 </ListView>
             </ScrollViewer>
 
-            <StackPanel Grid.Row="8"
+            <StackPanel Grid.Row="9"
                         Grid.Column="2"
                         Grid.ColumnSpan="2"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                <Button Content="Save" Style="{StaticResource PrimaryRaisedButton}" Margin="0 0 8 0" />
-                <Button Content="Reset" Style="{StaticResource InfoRaisedButton}" Margin="0 0 8 0" />
-                <Button Content="Cancel" Style="{StaticResource InfoOutlineRaisedButton}" />
+                <Button Content="Save" 
+                        Command="{Binding SubmitCommand}"
+                        Style="{StaticResource PrimaryRaisedButton}" 
+                        Margin="0 0 8 0" />
+                <Button Content="Reset"
+                        Command="{Binding ResetCommand}"
+                        Style="{StaticResource InfoRaisedButton}" />
             </StackPanel>
         </Grid>
     </ScrollViewer>

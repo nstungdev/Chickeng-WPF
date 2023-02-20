@@ -11,8 +11,8 @@
                 <Setter Property="Height" Value="50" />
             </Style>
         </Style.Resources>
-        <Setter Property="Background" Value="#ededed" />
-        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Opacity" Value="1" />
         <Setter Property="Panel.ZIndex" Value="999" />
     </Style>
 </ResourceDictionary>

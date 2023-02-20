@@ -10,6 +10,10 @@ namespace Chickeng.Infrastructure.DbContexts
 {
     public class ChickengDbContext : DbContext
     {
+        public ChickengDbContext()
+        {
+
+        }
         public ChickengDbContext(DbContextOptions options) : base(options)
         {
 

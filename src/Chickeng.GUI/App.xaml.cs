@@ -45,6 +45,7 @@ namespace Chickeng.GUI
             services.AddDbContext<ChickengDbContext>(o => o.UseSqlite(connectionStr), ServiceLifetime.Singleton);
 
             services.AddTransient<VocabularyService>();
+            services.AddTransient<PhraseService>();
 
             services.AddTransient<HomeViewModel>();
             services.AddTransient<MainViewModel>();

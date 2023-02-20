@@ -15,6 +15,8 @@ namespace Chickeng.Infrastructure.Entities
         public int Id { get; set; }
         [Required, MaxLength(255)]
         public string? Content { get; set; }
+        [Required, MaxLength(255)]
+        public string? Mean { get; set; }
         public string? Note { get; set; }
         public string? Pronounce { get; set; }
         public string? Tone { get; set; }
