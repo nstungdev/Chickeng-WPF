@@ -26,8 +26,9 @@ namespace Chickeng.GUI.Views.Shared
         }
 
         #region Register Binding Properties
+        // title Subhead
         public static readonly DependencyProperty SubheadProperty = DependencyProperty.Register(
-            "Subhead",
+            nameof(Subhead),
             typeof(string),
             typeof(MenuCardUC),
             new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnSubheadChanged)));
@@ -40,8 +41,9 @@ namespace Chickeng.GUI.Views.Shared
             }
         }
 
+        // title Badge
         public static readonly DependencyProperty BadgeProperty = DependencyProperty.Register(
-            "Badge",
+            nameof(Badge),
             typeof(string),
             typeof(MenuCardUC),
             new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnBadgeChanged)));
@@ -54,31 +56,50 @@ namespace Chickeng.GUI.Views.Shared
             }
         }
 
+        // title register
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
+            nameof(Title),
+            typeof(string),
+            typeof(MenuCardUC),
+            new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnTitleChanged)));
+        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var menuCard = d as MenuCardUC;
+            if (menuCard?.txt_title != null)
+            {
+                menuCard.txt_title.Text = e.NewValue as string;
+            }
+        }
+
         public static DependencyProperty CommandProperty = DependencyProperty.Register(
-            "Command", 
+            nameof(Command), 
             typeof(ICommand), 
             typeof(MenuCardUC), 
             new PropertyMetadata(null));
         #endregion
 
+        #region Properties
         public string? Title
         {
-            get => txt_title.Text;
-            set => txt_title.Text = value;
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
         public string? Subhead
         {
-            get => txt_subhead.Text;
-            set => txt_subhead.Text = value;
+            get => (string)GetValue(SubheadProperty);
+            set => SetValue(SubheadProperty, value);
         }
 
         public string? Badge
         {
-            get => txt_badge.Text;
-            set => txt_badge.Text = value;
+            get => (string)GetValue(BadgeProperty);
+            set => SetValue(BadgeProperty, value);
         }
+        #endregion
 
+        #region Commands
         public ICommand? Command { get; set; }
+        #endregion
     }
 }

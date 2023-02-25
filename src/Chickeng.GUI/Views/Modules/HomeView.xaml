@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.Resources>
@@ -26,6 +29,9 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="Margin" Value="0 0 0 5" />
         </Style>
+
+        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
+        <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -44,6 +50,12 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+
         <!--Application Name-->
         <Grid Margin="0 0 0 10" Grid.Row="0"
               Grid.Column="0">
@@ -60,6 +72,16 @@
                        Style="{StaticResource Subhead}"
                        TextWrapping="WrapWithOverflow"
                        Text="This is an application that supports learning English" />
+        </Grid>
+        
+        <!--Loading-->
+        <Grid Grid.Row="1"
+              Grid.RowSpan="5"
+              Grid.Column="0"
+              Grid.ColumnSpan="3"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+              Style="{StaticResource LoadingComponent}">
+            <fa:ImageAwesome />
         </Grid>
 
 
@@ -89,15 +111,15 @@
               Grid.Column="2"
               Grid.RowSpan="5"
               Background="Transparent">
-            <shared:MenuCardUC Title="Vocabulary" 
-                               Subhead="{Binding VocabularyItemCount, StringFormat=\{0\} items}" 
-                               Badge="{Binding VocabularyNewItemCount}" 
-                               Command="{Binding NavigateVocabularyTableCommand}"/>
-            
-            <shared:MenuCardUC Title="Phrase" 
-                               Subhead="{Binding PhraseItemCount, StringFormat=\{0\} items}" 
-                               Badge="{Binding PhraseNewItemCount}"
-                               Command="{Binding NavigatePhraseTableCommand}"/>
+            <shared:MenuCardUC Title="{Binding WordTitle}" 
+                               Subhead="{Binding WordTotal, StringFormat=\{0\} items}" 
+                               Badge="{Binding WordNewCount}" 
+                               Command="{Binding NavToVocTableCommand}"/>
+
+            <shared:MenuCardUC Title="{Binding PhraseTitle}" 
+                               Subhead="{Binding PhraseTotal, StringFormat=\{0\} items}" 
+                               Badge="{Binding PhraseNewCount}"
+                               Command="{Binding NavToPhraseTableCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

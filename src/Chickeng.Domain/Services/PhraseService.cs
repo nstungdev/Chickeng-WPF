@@ -1,4 +1,5 @@
 ﻿using Chickeng.Domain.DTOs;
+using Chickeng.Domain.Models;
 using Chickeng.Infrastructure.DbContexts;
 using Chickeng.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,20 @@ namespace Chickeng.Domain.Services
         {
             return await _dbContext.Phrases.ToArrayAsync();
         }
-
+        public async Task<CardModel> GetCardInfoAsync()
+        {
+            var today = DateTime.Today;
+            var total = await _dbContext.Phrases.CountAsync();
+            var newItemsCount = await _dbContext.Phrases.AsNoTracking()
+                .Where(e => e.CreatedAt.Date == today)
+                .CountAsync();
+            return new CardModel
+            {
+                Name = nameof(Phrase),
+                NewItemsCount = newItemsCount,
+                Total = total
+            };
+        }
         public async Task AddOneAsync(PhraseDTO phraseDto)
         {
             var phrase = new Phrase
@@ -38,13 +52,11 @@ namespace Chickeng.Domain.Services
             await _dbContext.Phrases.AddAsync(phrase);
             await _dbContext.SaveChangesAsync();
         }
-
         public async Task<Phrase?> GetOneByIdAsync(int id)
         {
             var result = await _dbContext.Phrases.FindAsync(id);
             return result;
         }
-
         public async Task UpdateOneAsync(int id, PhraseDTO phraseDTO)
         {
             var phraseInDB = await _dbContext.Phrases.FindAsync(id);
