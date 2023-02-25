@@ -1,5 +1,7 @@
 ﻿using Chickeng.Domain.Services;
 using Chickeng.GUI.Commands;
+using Chickeng.GUI.Common;
+using Chickeng.GUI.Helpers;
 using Chickeng.GUI.Models;
 using Chickeng.GUI.Stores;
 using Chickeng.Infrastructure.Entities;
@@ -88,7 +90,7 @@ namespace Chickeng.GUI.ViewModels
 
         private Task DeleteAction(object? id)
         {
-            MessageBox.Show("Coming soon", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBoxFactory.ShowInfoBox(CommonConstants.UnavailableFeatureMsg);
             return Task.CompletedTask;
         }
         #endregion

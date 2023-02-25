@@ -39,6 +39,7 @@
                          VerticalContentAlignment="Top"
                          Name="txtMain"
                          AcceptsReturn="True"
+                         Text="{Binding FormValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
                          HorizontalScrollBarVisibility="Auto"
                          VerticalScrollBarVisibility="Auto"
                          ScrollViewer.CanContentScroll="True"

@@ -25,9 +25,13 @@ namespace Chickeng.GUI.ViewModels
         public PhraseEditViewModel(PhraseService phraseService)
         {
             _phraseService = phraseService;
+
             SubmitCommand = new AsyncCommand(SubmitForm);
+            LoadTargetItemCommand = new AsyncCommand(LoadTargetItem);
+            ResetCommand = new AsyncCommand(ResetForm);
         }
 
+        #region Properties
         public string? Content 
         {
             get => _content; 
@@ -73,6 +77,7 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(Note));
             }
         }
+        public string Title { get => ReferenceObject == null ? "CREATE NEW PHRASE" : "UPDATE PHRASE"; }
         public bool? IsLoading 
         { 
             get => _isLoading; 
@@ -82,25 +87,46 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             } 
         }
-        public ICommand? SubmitCommand { get; set; }
-        public ICommand? Reset { get; set; }
+        public ICommand SubmitCommand { get; }
+        public ICommand LoadTargetItemCommand { get; }
+        public ICommand ResetCommand { get; }
+        #endregion
+
+        #region Private methods
         private async Task SubmitForm(object? param)
         {
-            IsLoading = true;
-
             try
             {
-                var phraseDto = new PhraseDTO
-                {
-                    Content = _content,
-                    Mean = _mean,
-                    Note = _note,
-                    Pronounce = _pronounce,
-                    Tone = _tone
-                };
+                IsLoading = true;
 
-                await _phraseService.AddOneAsync(phraseDto);
-                MessageBoxFactory.ShowInfoBox("Create new phrase successfully");
+                if (ReferenceObject == null)
+                {
+                    var phraseDto = new PhraseDTO
+                    {
+                        Content = _content,
+                        Mean = _mean,
+                        Note = _note,
+                        Pronounce = _pronounce,
+                        Tone = _tone
+                    };
+
+                    await _phraseService.AddOneAsync(phraseDto);
+                    MessageBoxFactory.ShowInfoBox("Create new phrase successfully");
+                }
+                else if (int.TryParse(ReferenceObject.ToString(), out var id))
+                {
+                    var phraseDto = new PhraseDTO
+                    {
+                        Mean = _mean,
+                        Note = _note,
+                        Pronounce = _pronounce,
+                        Content = _content,
+                        Tone = _tone
+                    };
+                    await _phraseService.UpdateOneAsync(id, phraseDto);
+                    MessageBoxFactory.ShowInfoBox("Update phrase successfully");
+                }
+
             }
             catch (Exception ex)
             {
@@ -111,5 +137,27 @@ namespace Chickeng.GUI.ViewModels
                 IsLoading = false;
             }
         }
+        private async Task LoadTargetItem(object? param)
+        {
+            if (ReferenceObject != null && int.TryParse(ReferenceObject.ToString(), out var identityValue))
+            {
+                var phrase = await _phraseService.GetOneByIdAsync(identityValue) ?? throw new NullReferenceException("Phrase not found");
+                Content = phrase.Content;
+                Mean = phrase.Mean;
+                Pronounce = phrase.Pronounce;
+                Tone = phrase.Tone;
+                Note = phrase.Note;
+            }
+        }
+        private Task ResetForm(object? param)
+        {
+            Content = null;
+            Mean = null;
+            Pronounce = null;
+            Tone = null;
+            Note = null;
+            return Task.CompletedTask;
+        }
+        #endregion
     }
 }

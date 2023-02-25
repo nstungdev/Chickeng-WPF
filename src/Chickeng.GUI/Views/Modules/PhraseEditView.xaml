@@ -4,11 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
+        <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <ScrollViewer Padding="20"
                   VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Auto">
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadTargetItemCommand}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
         <Grid Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -53,14 +65,14 @@
                        Foreground="#FF3E62D2"
                        FontWeight="DemiBold"
                        HorizontalAlignment="Center"
-                       Text="CREATE NEW PHRASE"/>
+                       Text="{Binding Title}"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.ColumnSpan="3"
                                         Grid.Row="2"
                                         Placeholder="Content ..."
                                         FormValue="{Binding Content}"
-                                        Lable="Word"/>
+                                        Lable="Content"/>
 
             <shared:FloatLableTextBoxUC Grid.Column="1"
                                         Grid.Row="3"
@@ -87,8 +99,8 @@
                                         Grid.Row="6"
                                         Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
-                                        MaxHeight="130"
-                                        ControlMaxHeight="130"
+                                        MaxHeight="90"
+                                        ControlMaxHeight="90"
                                         Placeholder="Note ..."
                                         FormValue="{Binding Note}"
                                         Lable="Note">

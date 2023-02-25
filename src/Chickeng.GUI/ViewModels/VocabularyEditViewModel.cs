@@ -1,6 +1,7 @@
 ﻿using Chickeng.Domain.DTOs;
 using Chickeng.Domain.Services;
 using Chickeng.GUI.Commands;
+using Chickeng.GUI.Helpers;
 using Chickeng.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Chickeng.GUI.ViewModels
             _vocabularyService = vocabularyService;
 
             LoadTargetItemCommand = new AsyncCommand(LoadTargetItem);
-            SubmitCommand = new AsyncCommand(Submit);
+            SubmitCommand = new AsyncCommand(SubmitForm);
         }
         #region Properties
         public string? Word 
@@ -104,7 +105,7 @@ namespace Chickeng.GUI.ViewModels
                 Note = voc.Note;
             }
         }
-        private async Task Submit(object? param)
+        private async Task SubmitForm(object? param)
         {
             try
             {
@@ -124,7 +125,7 @@ namespace Chickeng.GUI.ViewModels
                         LastUpdatedAt = null
                     };
                     await _vocabularyService.AddOneAsync(voc);
-                    MessageBox.Show("Create new vocabulary successfully", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxFactory.ShowInfoBox("Create new vocabulary successfully");
                 }
                 else if (int.TryParse(ReferenceObject.ToString(), out var id))
                 {
@@ -137,12 +138,12 @@ namespace Chickeng.GUI.ViewModels
                         WordType = _wordType
                     };
                     await _vocabularyService.UpdateOneAsync(id, vocDto);
-                    MessageBox.Show("Update vocabulary successfully", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxFactory.ShowInfoBox("Update vocabulary successfully");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Notification", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxFactory.ShowErrorBox(ex.Message);
             }
             finally
             {

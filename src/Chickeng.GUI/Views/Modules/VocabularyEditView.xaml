@@ -108,8 +108,8 @@
                                         Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
                                         FormValue="{Binding Note, UpdateSourceTrigger=PropertyChanged}"
-                                        MaxHeight="130"
-                                        ControlMaxHeight="130"
+                                        MaxHeight="120"
+                                        ControlMaxHeight="120"
                                         Placeholder="Note ..."
                                         Lable="Note">
             </shared:FloatLableMultiLineTextBoxUC>

@@ -27,23 +27,19 @@ namespace Chickeng.GUI.Views.Shared
         #region EXPOSE PROPERTIES
         public string? Placeholder { get => lblPlaceholder.Text; set => lblPlaceholder.Text = value; }
         public string? Lable { get => lblFloatLabel.Text; set => lblFloatLabel.Text = value; }
-        public string FormValue { get => txtMain.Text; set => txtMain.Text = value; }
+        public string FormValue
+        {
+            get => (string)GetValue(FormValueProperty);
+            set => SetValue(FormValueProperty, value);
+        }
         public static readonly DependencyProperty FormValueProperty = DependencyProperty.Register(
-            "FormValue",
+            nameof(FormValue),
             typeof(string),
             typeof(FloatLableMultiLineTextBoxUC),
-            new PropertyMetadata(string.Empty, new PropertyChangedCallback(OnFormValueChanged)));
-        private static void OnFormValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var floatTextBox = d as FloatLableMultiLineTextBoxUC;
-            if (floatTextBox?.txtMain != null)
-            {
-                floatTextBox.txtMain.Text = e.NewValue as string;
-            }
-        }
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty ControlMaxHeightProperty = DependencyProperty.Register(
-            "ControlMaxHeight",
+            nameof(ControlMaxHeight),
             typeof(double),
             typeof(FloatLableMultiLineTextBoxUC),
             new PropertyMetadata(double.NaN, new PropertyChangedCallback(OnControlMaxHeightChanged)));

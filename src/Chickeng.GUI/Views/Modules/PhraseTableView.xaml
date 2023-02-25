@@ -4,9 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="900">
+    <UserControl.Resources>
+        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
+        <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition />
@@ -29,6 +42,15 @@
                 Content="Create new phrase"
                 Command="{Binding CreateNewPhraseCommand}"/>
 
+        <Grid Grid.Row="1"
+              Grid.RowSpan="2"
+              Grid.Column="0"
+              Grid.ColumnSpan="3"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+              Style="{StaticResource LoadingComponent}">
+            <fa:ImageAwesome />
+        </Grid>
+
         <ListView Grid.Row="1"
                   Grid.Column="0"
                   Grid.ColumnSpan="3"
@@ -45,7 +67,7 @@
                     <GridViewColumn Header="Topic">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="120" Text="{Binding Topic}" />
+                                <TextBlock Width="120" Text="{Binding Phrase.Topic}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -53,7 +75,7 @@
                     <GridViewColumn Header="Content">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="370" Text="{Binding Content}" />
+                                <TextBlock Width="370" Text="{Binding Phrase.Content}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -61,7 +83,7 @@
                     <GridViewColumn Header="Created On">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="160" Text="{Binding CreatedAt}" />
+                                <TextBlock Width="160" Text="{Binding Phrase.CreatedAt}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -73,9 +95,13 @@
                                     <Button Content="Edit"
                                             Height="30"
                                             Margin="0 0 5 0"
+                                            Command="{Binding EditCommand}"
+                                            CommandParameter="{Binding Phrase.Id}"
                                             Style="{StaticResource LightRaisedButton}"/>
                                     <Button Content="Remove"
                                             Height="30"
+                                            Command="{Binding DeleteCommand}"
+                                            CommandParameter="{Binding Phrase.Id}"
                                             Style="{StaticResource DangerRaisedButton}"/>
                                 </StackPanel>
                             </DataTemplate>

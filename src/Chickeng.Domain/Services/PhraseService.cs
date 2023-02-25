@@ -17,9 +17,9 @@ namespace Chickeng.Domain.Services
         {
             _dbContext = dbContext;
         }
-        public async Task<IEnumerable<Vocabulary>> GetAllAsync()
+        public async Task<IEnumerable<Phrase>> GetAllAsync()
         {
-            return await _dbContext.Vocabularies.ToArrayAsync();
+            return await _dbContext.Phrases.ToArrayAsync();
         }
 
         public async Task AddOneAsync(PhraseDTO phraseDto)
@@ -39,23 +39,22 @@ namespace Chickeng.Domain.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<Vocabulary?> GetOneByIdAsync(int id)
+        public async Task<Phrase?> GetOneByIdAsync(int id)
         {
-            var result = await _dbContext.Vocabularies.FindAsync(id);
+            var result = await _dbContext.Phrases.FindAsync(id);
             return result;
         }
 
-        public async Task UpdateOneAsync(int id, VocabularyDTO vocDto)
+        public async Task UpdateOneAsync(int id, PhraseDTO phraseDTO)
         {
-            var voc = await _dbContext.Vocabularies.FindAsync(id);
-            if (voc == null)
-                throw new ArgumentNullException("Word not found");
-            voc.Word = vocDto.Word;
-            voc.WordType = vocDto.WordType;
-            voc.Mean = vocDto.Mean;
-            voc.Pronounce = vocDto.Pronounce;
-            voc.Note = vocDto.Note;
-            voc.LastUpdatedAt = DateTime.Now;
+            var phraseInDB = await _dbContext.Phrases.FindAsync(id);
+            if (phraseInDB == null)
+                throw new ArgumentNullException("Phrase not found");
+            phraseInDB.Content = phraseDTO.Content;
+            phraseInDB.Note = phraseDTO.Note;
+            phraseInDB.Pronounce = phraseDTO.Pronounce;
+            phraseInDB.Tone = phraseDTO.Tone;
+            phraseInDB.LastUpdatedAt = DateTime.Now;
 
             await _dbContext.SaveChangesAsync();
         }
