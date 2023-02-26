@@ -24,14 +24,14 @@ namespace Chickeng.GUI.ViewModels
         private int _phraseNewCount;
         private string? _wordTitle;
         private string? _phraseTitle;
-        private bool _isLoading;
+        private bool _isLoading = false;
         #endregion
         public HomeViewModel(NavigationService<VocabularyTableViewModel> navVocaTable,
             NavigationService<PhraseTableViewModel> navPhraseTable,
             VocabularyService vocabularyService,
             PhraseService phraseService)
         {
-            // DI
+            // DI fields
             _navVocaTable = navVocaTable;
             _navPhraseTable = navPhraseTable;
             _vocabularyService = vocabularyService;
@@ -43,9 +43,6 @@ namespace Chickeng.GUI.ViewModels
             // command
             NavToVocTableCommand = new AsyncCommand(NavToVocTableAsync);
             NavToPhraseTableCommand = new AsyncCommand(NavToPhraseTableAsync);
-
-
-            QuitCommand = new QuitApplicationAsyncCommand();
         }
 
         #region Properties
@@ -112,11 +109,16 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
-        public ICommand QuitCommand { get; set; }
         #endregion
 
         #region Commands
         public ICommand LoadResourceCommand { get; }
+        public ICommand NavToVocTableCommand { get; }
+        public ICommand NavToPhraseTableCommand { get; }
+
+        #endregion
+
+        #region Actions
         private async Task GetResourceAsync(object? @param)
         {
             try
@@ -134,7 +136,7 @@ namespace Chickeng.GUI.ViewModels
                 PhraseNewCount = phraseCardInfo.NewItemsCount;
                 PhraseTitle = phraseCardInfo.Name;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBoxFactory.ShowErrorBox(ex.Message);
             }
@@ -143,24 +145,16 @@ namespace Chickeng.GUI.ViewModels
                 IsLoading = false;
             }
         }
-
-        // nav to vocabulary command
-        public ICommand NavToVocTableCommand { get; }
         private Task NavToVocTableAsync(object? @param)
         {
             _navVocaTable.Navigate(@param);
             return Task.CompletedTask;
         }
-
-        // nav to phrase command
-        public ICommand NavToPhraseTableCommand { get; }
         private Task NavToPhraseTableAsync(object? @param)
         {
             _navPhraseTable.Navigate(@param);
             return Task.CompletedTask;
         }
-
         #endregion
-
     }
 }

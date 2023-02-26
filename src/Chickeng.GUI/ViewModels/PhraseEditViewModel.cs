@@ -14,18 +14,24 @@ namespace Chickeng.GUI.ViewModels
 {
     public class PhraseEditViewModel : ViewModelBase
     {
+        #region DI fields
         private readonly PhraseService _phraseService;
+        #endregion
 
+        #region Normal fields
         private string? _content;
         private string? _mean;
         private string? _pronounce;
         private string? _note;
         private string? _tone;
-        private bool? _isLoading;
+        private bool? _isLoading = false;
+        #endregion
         public PhraseEditViewModel(PhraseService phraseService)
         {
+            // DI fields
             _phraseService = phraseService;
 
+            // commands
             SubmitCommand = new AsyncCommand(SubmitForm);
             LoadTargetItemCommand = new AsyncCommand(LoadTargetItem);
             ResetCommand = new AsyncCommand(ResetForm);
@@ -87,12 +93,15 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             } 
         }
+        #endregion
+
+        #region Commands
         public ICommand SubmitCommand { get; }
         public ICommand LoadTargetItemCommand { get; }
         public ICommand ResetCommand { get; }
         #endregion
 
-        #region Private methods
+        #region Actions
         private async Task SubmitForm(object? param)
         {
             try

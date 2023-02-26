@@ -4,24 +4,24 @@ using Chickeng.GUI.Common;
 using Chickeng.GUI.Helpers;
 using Chickeng.GUI.Models;
 using Chickeng.GUI.Stores;
-using Chickeng.Infrastructure.Entities;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Chickeng.GUI.ViewModels
 {
     public class VocabularyTableViewModel : ViewModelBase
     {
+        #region DI fields
         private readonly NavigationService<VocabularyEditViewModel> _navVocaEditService;
         private readonly VocabularyService _vocabularyService;
+        #endregion
+
+        #region Normal fields
         private bool _isLoading = false;
         private ObservableCollection<VocabularyTableModel>? _vocabularies;
+        #endregion
         public VocabularyTableViewModel(NavigationService<VocabularyEditViewModel> navVocaEditService,
             VocabularyService vocabularyService)
         {
@@ -41,6 +41,7 @@ namespace Chickeng.GUI.ViewModels
             DeleteCommand = new AsyncCommand(DeleteAction);
         }
 
+        #region Properties
         public bool IsLoading
         {
             get => _isLoading;
@@ -50,7 +51,6 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
-
         public ObservableCollection<VocabularyTableModel>? Vocabularies {
             get => _vocabularies;
             set
@@ -60,12 +60,16 @@ namespace Chickeng.GUI.ViewModels
                 _isLoading = false;
             }
         }
+        #endregion
+
+        #region Commands
         public ICommand CreateNewWordCommand { get; }
         public ICommand LoadResourceCommand { get; }
         public ICommand EditWordCommand { get; }
         public ICommand DeleteCommand { get; }
+        #endregion
 
-        #region Private method
+        #region Actions
         private async Task LoadResource(object? @param)
         {
             IsLoading = true;

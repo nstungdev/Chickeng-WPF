@@ -8,34 +8,42 @@ namespace Chickeng.GUI.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        #region DI fields
         private readonly NavigationStore _navigationStore;
         private readonly NavigationService<HomeViewModel> _navHome;
+        #endregion
         public MainViewModel(NavigationStore navigationStore, 
             NavigationService<HomeViewModel> navHome)
         {
+            // DI fields
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _navHome = navHome;
 
+            // commands
             QuitCommand = new AsyncCommand(QuitActionAsync);
             BackToHomeCommand = new AsyncCommand(BackToHomeActionAsync);
         }
 
+        #region Event Actions
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
+        #endregion
 
         #region Commands
         public ICommand BackToHomeCommand { get; }
+        public ICommand QuitCommand { get; }
+        #endregion
+
+        #region Actions
         private Task BackToHomeActionAsync(object? @param)
         {
             if (CurrentViewModel.GetType() != typeof(HomeViewModel))
                 _navHome.Navigate();
             return Task.CompletedTask;
         }
-
-        public ICommand QuitCommand { get; }
         private Task QuitActionAsync(object? @param)
         {
             var dialog = MessageBox.Show("Are you sure?", "Exit Chickeng", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -47,10 +55,13 @@ namespace Chickeng.GUI.ViewModels
             return Task.CompletedTask;
         }
         #endregion
+
+        #region Properties
         public double EffectWidth { get => 40; }
         public double EffectHeight { get => 40; }
         public double OriginWidth { get => 35; }
         public double OriginHeight { get => 35; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+        #endregion
     }
 }

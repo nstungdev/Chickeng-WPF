@@ -4,26 +4,24 @@ using Chickeng.GUI.Commands;
 using Chickeng.GUI.Helpers;
 using Chickeng.Infrastructure.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Chickeng.GUI.ViewModels
 {
     public class VocabularyEditViewModel : ViewModelBase
     {
+        #region DI fields
         private readonly VocabularyService _vocabularyService;
-        #region Fields
+        #endregion
+
+        #region Normal fields
         private bool _isLoading = false;
-        private string? _word { get; set; }
-        private string? _wordType { get; set; }
-        private string? _mean { get; set; }
-        private string? _pronounce { get; set; }
-        private string? _note { get; set; }
+        private string? _word;
+        private string? _wordType;
+        private string? _mean;
+        private string? _pronounce;
+        private string? _note;
         #endregion
         public VocabularyEditViewModel(VocabularyService vocabularyService)
         {
@@ -32,6 +30,7 @@ namespace Chickeng.GUI.ViewModels
             LoadTargetItemCommand = new AsyncCommand(LoadTargetItem);
             SubmitCommand = new AsyncCommand(SubmitForm);
         }
+
         #region Properties
         public string? Word 
         {
@@ -88,11 +87,14 @@ namespace Chickeng.GUI.ViewModels
                 OnPropertyChanged(nameof(IsLoading));
             }
         }
+        #endregion
+
+        #region Commands
         public ICommand SubmitCommand { get; set; }
         public ICommand LoadTargetItemCommand { get; set; }
         #endregion
 
-        #region Private Methods
+        #region Actions
         private async Task LoadTargetItem(object? param)
         {
             if (ReferenceObject != null && int.TryParse(ReferenceObject.ToString(), out var identityValue))
