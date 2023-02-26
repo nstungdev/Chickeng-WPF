@@ -9,9 +9,14 @@
              Loaded="OnLoaded">
     <Grid Name="pnContainer" 
           Background="Transparent"
-          Cursor="Hand"
-          MouseLeftButtonUp="pnContainer_MouseLeftButtonUp">
+          Cursor="Hand">
 
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="MouseLeftButtonUp" SourceObject="{Binding ElementName=pnContainer}">
+                <behaviors:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:FloatEffectButtonUC}}, Path=Command}" />
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+        
         <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Name="canvas"
