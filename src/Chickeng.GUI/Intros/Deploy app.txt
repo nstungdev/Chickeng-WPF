@@ -2,8 +2,8 @@
 
 S2: dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true <<on local>>
 
-S2: Add <RuntimeIdentifier>win-x64</RuntimeIdentifier>  <<on .csproj>>
+S3: Add <RuntimeIdentifier>win-x64</RuntimeIdentifier>  <<on .csproj>>
 
-S2: RUN
+S4: RUN
 	git tag chickeng/v1.0.0
 	git push origin chickeng/v1.0.0
