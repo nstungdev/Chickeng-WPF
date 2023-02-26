@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,15 +35,32 @@ namespace Chickeng.GUI
         {
             IConfiguration configuaration = context.Configuration;
 
-            // Write code below
-            string? connectionString = configuaration.GetConnectionString("Default");
+            var env = configuaration.GetValue<string>("LaunchOptions:Environment") 
+                ?? throw new ArgumentNullException("Deployment environment not found");
+
+            string? connectionString = null;
+            if (env.Equals("DEV", StringComparison.OrdinalIgnoreCase))
+            {
+                connectionString = configuaration.GetConnectionString("Default");
+            }
+            else if (env.Equals("PROD", StringComparison.OrdinalIgnoreCase))
+            {
+                var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var propramPath = configuaration.GetValue<string>("LaunchOptions:ProgramPath") ?? string.Empty;
+                var fileName = "chickeng-prod.db";
+                var fullPath = Path.Combine(folder, propramPath, fileName);
+                connectionString = $"Data Source={fullPath}";
+            }
+            else
+            {
+                throw new ArgumentNullException("Deployment environment not defined");
+            }
 
             if (connectionString == null)
                 throw new ArgumentNullException("Sqlite connection string was null");
 
             #region DI Func Create ViewModel
-            var connectionStr = configuaration.GetConnectionString("Default");
-            services.AddDbContext<ChickengDbContext>(o => o.UseSqlite(connectionStr), ServiceLifetime.Singleton);
+            services.AddDbContext<ChickengDbContext>(o => o.UseSqlite(connectionString), ServiceLifetime.Singleton);
 
             services.AddTransient<VocabularyService>();
             services.AddTransient<PhraseService>();
@@ -78,6 +96,11 @@ namespace Chickeng.GUI
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // call migrate() include (ensure create database & migrate schema)
+            using var scope = _host.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<ChickengDbContext>();
+            db.Database.Migrate();
+
             // starting as HOST
             _host.Start();
 

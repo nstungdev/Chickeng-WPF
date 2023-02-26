@@ -5,7 +5,14 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<ApplicationIcon>chickeng-icon.ico</ApplicationIcon>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies> 
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="chickeng-icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />

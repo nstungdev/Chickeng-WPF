@@ -22,10 +22,10 @@ namespace Chickeng.Infrastructure.DbContexts
         public DbSet<Phrase> Phrases { get; set; }
         public DbSet<Topic> Topics { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite(@"Data Source=D:\\MasterSpaces\\Projects\\chickeng\\db\\chickeng-dev.db");
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite(@"Data Source=D:\\MasterSpaces\\Projects\\chickeng\\db\\chickeng-dev.db");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }
