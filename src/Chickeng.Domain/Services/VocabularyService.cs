@@ -20,7 +20,9 @@ namespace Chickeng.Domain.Services
         }
         public async Task<IEnumerable<Vocabulary>> GetAllAsync()
         {
-            return await _dbContext.Vocabularies.ToArrayAsync();
+            return await _dbContext.Vocabularies
+                .OrderBy(e => e.Word)
+                .ToArrayAsync();
         }
         public async Task<CardModel> GetCardInfoAsync()
         {

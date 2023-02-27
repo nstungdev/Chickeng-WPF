@@ -20,7 +20,10 @@ namespace Chickeng.Domain.Services
         }
         public async Task<IEnumerable<Phrase>> GetAllAsync()
         {
-            return await _dbContext.Phrases.ToArrayAsync();
+            return await _dbContext.Phrases
+                .OrderByDescending(e => e.LastUpdatedAt)
+                .ThenByDescending(e => e.CreatedAt)
+                .ToArrayAsync();
         }
         public async Task<CardModel> GetCardInfoAsync()
         {
