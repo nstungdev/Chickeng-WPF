@@ -58,6 +58,16 @@
                 </Style>
             </Grid.Resources>
 
+            <!--Form loading-->
+            <Grid Grid.Row="2"
+                  Grid.RowSpan="8"
+                  Grid.Column="1"
+                  Grid.ColumnSpan="3"
+                  Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+                  Style="{StaticResource LoadingComponent}">
+                <fa:ImageAwesome />
+            </Grid>
+            
             <!--Form Region-->
             <TextBlock Grid.Row="1"
                        Grid.Column="1"
