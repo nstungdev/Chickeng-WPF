@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid HorizontalAlignment="Stretch">
+    <Grid>
         <behaviors:Interaction.Triggers>
             <behaviors:EventTrigger EventName="Loaded">
                 <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />

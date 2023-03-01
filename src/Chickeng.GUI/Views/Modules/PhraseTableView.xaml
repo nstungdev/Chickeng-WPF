@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             xmlns:cvt="clr-namespace:Chickeng.GUI.Converters" 
+             xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
+             mc:Ignorable="d"
+             FontSize="13">
     <UserControl.Resources>
-        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
@@ -19,42 +19,61 @@
                 <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />
             </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
-        
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+        <!--Top Row-->
+        <Grid Grid.Row="0"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="2"
-                Grid.Row="0"
-                Width="150"
-                Height="30"
-                HorizontalAlignment="Right"
-                Style="{StaticResource PrimaryRaisedButton}"
-                Content="Create new phrase"
-                Command="{Binding CreateNewPhraseCommand}"/>
+            <!--Total number-->
+            <TextBlock Grid.Column="0"
+                       VerticalAlignment="Bottom"
+                       FontSize="18"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       Margin="0 0 0 5"
+                       Text="100 items"/>
 
+            <!--Filter-->
+            <shared:FloatLableTextBoxUC Grid.Column="1"
+                                        Margin="0 0 0 5"
+                                        Width="250"
+                                        Height="45"
+                                        Placeholder="Filter ..."
+                                        Lable="Filter"/>
+
+            <!--Create new-->
+            <Button Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 0 5"
+                    Width="150"
+                    Height="30"
+                    Style="{StaticResource PrimaryRaisedButton}"
+                    Content="Create new phrase"
+                    Command="{Binding CreateNewPhraseCommand}"/>
+        </Grid>
+
+        <!--Center Row-->
+        <!--Loading-->
         <Grid Grid.Row="1"
-              Grid.RowSpan="2"
-              Grid.Column="0"
-              Grid.ColumnSpan="3"
               Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
               Style="{StaticResource LoadingComponent}">
             <fa:ImageAwesome />
         </Grid>
-
+        
+        <!--Data GridView-->
         <ListView Grid.Row="1"
-                  Grid.Column="0"
-                  Grid.ColumnSpan="3"
-                  Grid.RowSpan="2"
                   ItemsSource="{Binding Phrases}">
             <ListView.Resources>
                 <Style TargetType="{x:Type GridViewColumnHeader}">
@@ -110,5 +129,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <!--Bottom Row-->
+        <Grid Grid.Row="2">
+            <!--Paging Buttons-->
+        </Grid>
     </Grid>
 </UserControl>
