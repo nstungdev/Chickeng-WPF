@@ -27,7 +27,7 @@
         <!--Border Style-->
         <Border.Style>
             <Style TargetType="Border">
-                <Setter Property="Background" Value="#5F9DF7" />
+                <Setter Property="Background" Value="#FF63B4CF" />
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="#FF0F50B1" />

@@ -8,17 +8,21 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1080">
+             mc:Ignorable="d"
+             FontSize="13"
+             d:DesignHeight="700" 
+             d:DesignWidth="1060"
+             MaxHeight="700"
+             MaxWidth="1060">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Foreground" Value="#CC2697A0" />
             <Setter Property="FontWeight" Value="DemiBold" />
         </Style>
 
         <Style TargetType="TextBlock" x:Key="Subhead">
-            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontSize" Value="12" />
             <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="Foreground" Value="Gray" />
         </Style>
@@ -26,28 +30,16 @@
         <Style TargetType="shared:MenuCardUC">
             <Setter Property="Height" Value="60" />
             <Setter Property="Width" Value="250" />
-            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontSize" Value="14" />
             <Setter Property="Margin" Value="0 0 0 5" />
         </Style>
 
-        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MaxWidth="300" />
             <ColumnDefinition />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <behaviors:Interaction.Triggers>
@@ -56,70 +48,73 @@
             </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
 
-        <!--Application Name-->
-        <Grid Margin="0 0 0 10" Grid.Row="0"
-              Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                   Style="{StaticResource Title}"
-                   Text="Chickeng Application"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" />
-            <TextBlock Grid.Row="1"
-                       Style="{StaticResource Subhead}"
-                       TextWrapping="WrapWithOverflow"
-                       Text="This is an application that supports learning English" />
-        </Grid>
-        
         <!--Loading-->
-        <Grid Grid.Row="1"
-              Grid.RowSpan="5"
-              Grid.Column="0"
-              Grid.ColumnSpan="3"
+        <Grid Grid.Column="0"
+              Grid.ColumnSpan="2"
               Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
               Style="{StaticResource LoadingComponent}">
             <fa:ImageAwesome />
         </Grid>
+        
+        <!--Left Column-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <!--Application Name & Detail-->
+            <StackPanel Grid.Row="0"
+                        Orientation="Vertical">
+                <TextBlock Style="{StaticResource Title}"
+                           Text="Chickeng Application"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" />
+                <TextBlock Style="{StaticResource Subhead}"
+                           TextWrapping="WrapWithOverflow"
+                           Text="This is an application that supports learning English" />
+            </StackPanel>
+
+            <!--History-->
+            <StackPanel Grid.Row="1"
+                        Orientation="Vertical">
+                <TextBlock Style="{StaticResource Title}"
+                           Text="History"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" />
+            </StackPanel>
+        </Grid>
+
+        
+        <!--Right Column-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+
+            <!--Search Input-->
+            <shared:FloatLableTextBoxUC Grid.Row="0"
+                                        Width="250"
+                                        Height="50"
+                                        Placeholder="Search ..."
+                                        Lable="Search"/>
 
 
-        <!--History-->
-        <TextBlock Grid.Row="1"
-                   Grid.Column="0"
-                   Style="{StaticResource Title}"
-                   Text="History"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" />
-
-        <!--Search Input-->
-        <TextBox Grid.Row="0"
-                 Grid.Column="2"
-                 Width="150"
-                 Height="28"
-                 Padding="5 0"
-                 VerticalAlignment="Top"
-                 VerticalContentAlignment="Center"
-                 Text="Filter ..."
-                 FontStyle="Italic"
-                 Foreground="LightGray"
-                 HorizontalAlignment="Left"/>
-
-        <!--Items-->
-        <StackPanel Grid.Row="1"
-              Grid.Column="2"
-              Grid.RowSpan="5"
-              Background="Transparent">
-            <shared:MenuCardUC Title="{Binding WordTitle}" 
+            <!--Items-->
+            <StackPanel Grid.Row="1"
+                        Background="Transparent"
+                        Margin="0 10 0 0">
+                <shared:MenuCardUC Title="{Binding WordTitle}" 
                                Subhead="{Binding WordTotal, StringFormat=\{0\} items}" 
                                Badge="{Binding WordNewCount}" 
                                Command="{Binding NavToVocTableCommand}"/>
 
-            <shared:MenuCardUC Title="{Binding PhraseTitle}" 
+                <shared:MenuCardUC Title="{Binding PhraseTitle}" 
                                Subhead="{Binding PhraseTotal, StringFormat=\{0\} items}" 
                                Badge="{Binding PhraseNewCount}"
                                Command="{Binding NavToPhraseTableCommand}"/>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
