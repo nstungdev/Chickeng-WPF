@@ -9,7 +9,7 @@
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             d:DesignHeight="600" d:DesignWidth="1080">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="FontSize" Value="20" />

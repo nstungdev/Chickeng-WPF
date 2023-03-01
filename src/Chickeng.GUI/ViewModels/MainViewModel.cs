@@ -57,10 +57,10 @@ namespace Chickeng.GUI.ViewModels
         #endregion
 
         #region Properties
-        public double EffectWidth { get => 40; }
-        public double EffectHeight { get => 40; }
-        public double OriginWidth { get => 35; }
-        public double OriginHeight { get => 35; }
+        public double EffectWidth { get => 30; }
+        public double EffectHeight { get => 30; }
+        public double OriginWidth { get => 25; }
+        public double OriginHeight { get => 25; }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         #endregion
     }
