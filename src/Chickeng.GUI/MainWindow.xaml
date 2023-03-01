@@ -14,7 +14,8 @@
         AllowsTransparency="False"
         Background="Transparent"
         ResizeMode="CanMinimize"
-        Title="" Height="790" Width="1080">
+        Height="800" 
+        Width="1080">
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -48,8 +49,8 @@
                         Margin="10"
                         MaxWidth="1040"
                         Width="1040"
-                        MaxHeight="700"
-                        Height="700"
+                        MaxHeight="650"
+                        Height="650"
                         Content="{Binding CurrentViewModel}" />
 
         <!--version-->
