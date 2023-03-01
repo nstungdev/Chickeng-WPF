@@ -6,126 +6,147 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              xmlns:local="clr-namespace:Chickeng.GUI.Views.Modules" 
-             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors" xmlns:shared="clr-namespace:Chickeng.GUI.Views.Shared"
              mc:Ignorable="d" 
-             FontSize="13"
-             d:DesignHeight="600" d:DesignWidth="900">
+             FontSize="13">
     <UserControl.Resources>
-        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid HorizontalAlignment="Stretch">
         <behaviors:Interaction.Triggers>
             <behaviors:EventTrigger EventName="Loaded">
                 <behaviors:InvokeCommandAction Command="{Binding LoadResourceCommand}" />
             </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
-     
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        
+        <!--Top Row-->
+        <Grid Grid.Row="0"
+              VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+            <!--Total number-->
+            <TextBlock Grid.Column="0"
+                       VerticalAlignment="Bottom"
+                       FontSize="18"
+                       Foreground="Black"
+                       FontWeight="Bold"
+                       Margin="0 0 0 5"
+                       Text="100 items"/>
 
-        <Button Grid.Column="2"
-                Grid.Row="0"
-                Width="150"
-                Height="30"
-                HorizontalAlignment="Right"
-                Style="{StaticResource PrimaryRaisedButton}"
-                Content="Create new word"
-                Command="{Binding CreateNewWordCommand}"/>
+            <!--Filter-->
+            <shared:FloatLableTextBoxUC Grid.Column="1"
+                                        Margin="0 0 0 5"
+                                        Width="250"
+                                        Height="45"
+                                        Placeholder="Filter ..."
+                                        Lable="Filter"/>
 
+            <!--Create new-->
+            <Button Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 0 5"
+                    Width="150"
+                    Height="30"
+                    Style="{StaticResource PrimaryRaisedButton}"
+                    Content="Create new word"
+                    Command="{Binding CreateNewWordCommand}"/>
+        </Grid>
+
+        <!--Center Row-->
         <Grid Grid.Row="1"
-              Grid.RowSpan="2"
-              Grid.Column="0"
-              Grid.ColumnSpan="3"
               Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
               Style="{StaticResource LoadingComponent}">
             <fa:ImageAwesome />
         </Grid>
+        <Grid Grid.Row="1">
+            <!--Data GridView-->
+            <ListView ItemsSource="{Binding Vocabularies}">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    </Style>
+                </ListView.Resources>
 
-        <ListView Grid.Row="1"
-                  Grid.Column="0"
-                  Grid.ColumnSpan="3"
-                  Grid.RowSpan="2"
-                  ItemsSource="{Binding Vocabularies}">
-            <ListView.Resources>
-                <Style TargetType="{x:Type GridViewColumnHeader}">
-                    <Setter Property="HorizontalContentAlignment" Value="Left" />
-                </Style>
-            </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Word">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="100" Text="{Binding Vocabulary.Word}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Word">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="100" Text="{Binding Vocabulary.Word}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <GridViewColumn Header="Type">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="50" Text="{Binding Vocabulary.WordType}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                    <GridViewColumn Header="Type">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="50" Text="{Binding Vocabulary.WordType}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <GridViewColumn Header="Mean">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="150" Text="{Binding Vocabulary.Mean}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                    <GridViewColumn Header="Mean">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="150" Text="{Binding Vocabulary.Mean}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <GridViewColumn Header="Pronounce">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="100" Text="{Binding Vocabulary.Pronounce}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                    <GridViewColumn Header="Pronounce">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="100" Text="{Binding Vocabulary.Pronounce}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <GridViewColumn Header="Created On">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="200" Text="{Binding Vocabulary.CreatedAt}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
 
-                    <GridViewColumn Header="Created On">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="200" Text="{Binding Vocabulary.CreatedAt}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Width="150" Orientation="Horizontal">
-                                    <Button Content="Edit"
+                        <GridViewColumn Header="">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Width="150" Orientation="Horizontal">
+                                        <Button Content="Edit"
                                             Height="30"
                                             Margin="0 0 5 0"
                                             CommandParameter="{Binding Vocabulary.Id}"
                                             Command="{Binding EditCommand}"
                                             Style="{StaticResource LightRaisedButton}"/>
-                                    <Button Content="Remove"
+                                        <Button Content="Remove"
                                             Height="30"
                                             CommandParameter="{Binding Vocabulary.Id}"
                                             Command="{Binding DeleteCommand}"
                                             Style="{StaticResource DangerRaisedButton}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        
+        <!--Bottom Row-->
+        <Grid Grid.Row="2">
+            <!--Paging Buttons-->
+        </Grid>
     </Grid>
 </UserControl>

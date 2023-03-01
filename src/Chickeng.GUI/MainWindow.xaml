@@ -44,10 +44,10 @@
         </Grid.Resources>
 
         <!--dynamic content-->
-        <ContentControl Grid.Row="0" 
+        <ContentControl Grid.Row="0"
                         Margin="10"
-                        MaxWidth="1060"
-                        Width="1060"
+                        MaxWidth="1040"
+                        Width="1040"
                         MaxHeight="700"
                         Height="700"
                         Content="{Binding CurrentViewModel}" />
