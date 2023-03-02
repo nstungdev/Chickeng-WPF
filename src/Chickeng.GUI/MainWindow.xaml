@@ -67,7 +67,7 @@
                 </Style>
             </StackPanel.Resources>
             <TextBlock Text="version: v2.5.0" />
-            <TextBlock Text="publish: 27/2/2023" />
+            <TextBlock Text="publish: 2/3/2023" />
         </StackPanel>
         
         <!--bottom functionality button-->
