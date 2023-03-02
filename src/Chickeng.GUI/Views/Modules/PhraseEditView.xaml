@@ -7,6 +7,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+             FontSize="13"
              mc:Ignorable="d">
     <UserControl.Resources>
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
