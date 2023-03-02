@@ -41,7 +41,7 @@
                        Foreground="Black"
                        FontWeight="Bold"
                        Margin="0 0 0 5"
-                       Text="100 items"/>
+                       Text="{Binding Vocabularies.Count, StringFormat=\{0\} items}"/>
 
             <!--Filter-->
             <shared:FloatLableTextBoxUC Grid.Column="1"
@@ -59,8 +59,23 @@
                     Width="150"
                     Height="30"
                     Style="{StaticResource PrimaryRaisedButton}"
-                    Content="Create new word"
-                    Command="{Binding CreateNewWordCommand}"/>
+                    Command="{Binding CreateNewWordCommand}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+
+                    <fa:ImageAwesome Grid.Column="0" 
+                                     Icon="PlusCircle" 
+                                     Foreground="White" />
+
+                    <TextBlock Text="New Word"
+                               Grid.Column="2"/>
+
+                </Grid>
+            </Button>
         </Grid>
 
         <!--Center Row-->
@@ -80,10 +95,18 @@
 
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="#">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Width="50" Text="{Binding Position}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
                         <GridViewColumn Header="Word">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Width="100" Text="{Binding Vocabulary.Word}" />
+                                    <TextBlock Width="200" Text="{Binding Word}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -91,7 +114,7 @@
                         <GridViewColumn Header="Type">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Width="50" Text="{Binding Vocabulary.WordType}" />
+                                    <TextBlock Width="100" Text="{Binding Type, StringFormat=(\{0\})}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -99,23 +122,7 @@
                         <GridViewColumn Header="Mean">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Width="150" Text="{Binding Vocabulary.Mean}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Pronounce">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Width="100" Text="{Binding Vocabulary.Pronounce}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Header="Created On">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Width="200" Text="{Binding Vocabulary.CreatedAt}" />
+                                    <TextBlock Width="400" Text="{Binding Mean}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -123,18 +130,21 @@
                         <GridViewColumn Header="">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Width="150" Orientation="Horizontal">
-                                        <Button Content="Edit"
-                                            Height="30"
+                                    <StackPanel Width="100" Orientation="Horizontal">
+                                        <Button Height="30"
                                             Margin="0 0 5 0"
-                                            CommandParameter="{Binding Vocabulary.Id}"
+                                            CommandParameter="{Binding Id}"
                                             Command="{Binding EditCommand}"
-                                            Style="{StaticResource LightRaisedButton}"/>
-                                        <Button Content="Remove"
-                                            Height="30"
-                                            CommandParameter="{Binding Vocabulary.Id}"
+                                            Style="{StaticResource LightRaisedButton}">
+                                            <fa:ImageAwesome Icon="Pencil" Foreground="Black" />
+                                        </Button>
+                                        
+                                        <Button Height="30"
+                                            CommandParameter="{Binding Id}"
                                             Command="{Binding DeleteCommand}"
-                                            Style="{StaticResource DangerRaisedButton}"/>
+                                            Style="{StaticResource DangerRaisedButton}">
+                                            <fa:ImageAwesome Icon="Trash" Foreground="White" />
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

@@ -75,9 +75,12 @@ namespace Chickeng.GUI.ViewModels
 
             var results = await _phraseService.GetAllAsync();
             Phrases = new ObservableCollection<PhraseTableModel>(results
-                .Select(e => new PhraseTableModel
+                .Select((e, idx) => new PhraseTableModel
                 {
-                    Phrase = e,
+                    Position = idx + 1,
+                    Id = e.Id,
+                    Content = e.Content,
+                    Mean = e.Mean,
                     EditCommand = EditPhraseCommand,
                     DeleteCommand = DeletePhraseCommand
                 }));

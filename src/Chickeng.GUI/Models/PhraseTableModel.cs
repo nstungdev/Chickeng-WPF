@@ -10,7 +10,10 @@ namespace Chickeng.GUI.Models
 {
     public class PhraseTableModel
     {
-        public Phrase? Phrase { get; set; }
+        public int Position { get; set; }
+        public string? Content { get; set; }
+        public string? Mean { get; set; }
+        public int Id { get; set; }
         public ICommand? EditCommand { get; set; }
         public ICommand? DeleteCommand { get; set; }
     }

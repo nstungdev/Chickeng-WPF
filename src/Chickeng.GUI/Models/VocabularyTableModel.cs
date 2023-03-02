@@ -10,7 +10,12 @@ namespace Chickeng.GUI.Models
 {
     public class VocabularyTableModel
     {
-        public Vocabulary? Vocabulary { get; set; }
+        public int Position { get; set; }
+        public int Id { get; set; }
+        public string? Word { get; set; }
+        public string? Type { get; set; }
+        public string? Pronounce { get; set; }
+        public string? Mean { get; set; }
         public ICommand? EditCommand { get; set; }
         public ICommand? DeleteCommand { get; set; }
     }

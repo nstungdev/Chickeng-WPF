@@ -76,9 +76,14 @@ namespace Chickeng.GUI.ViewModels
 
             var results = await _vocabularyService.GetAllAsync();
             Vocabularies = new ObservableCollection<VocabularyTableModel>(results
-                .Select(e => new VocabularyTableModel
+                .Select((e, idx) => new VocabularyTableModel
                 {
-                    Vocabulary = e,
+                    Position = idx + 1,
+                    Word = e.Word,
+                    Id = e.Id,
+                    Pronounce = e.Pronounce,
+                    Type = e.WordType,
+                    Mean = e.Mean,
                     EditCommand = EditWordCommand,
                     DeleteCommand = DeleteCommand
                 }));

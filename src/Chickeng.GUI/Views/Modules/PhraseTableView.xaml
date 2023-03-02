@@ -42,7 +42,7 @@
                        Foreground="Black"
                        FontWeight="Bold"
                        Margin="0 0 0 5"
-                       Text="100 items"/>
+                       Text="{Binding Phrases.Count, StringFormat=\{0\} items}"/>
 
             <!--Filter-->
             <shared:FloatLableTextBoxUC Grid.Column="1"
@@ -60,8 +60,23 @@
                     Width="150"
                     Height="30"
                     Style="{StaticResource PrimaryRaisedButton}"
-                    Content="Create new phrase"
-                    Command="{Binding CreateNewPhraseCommand}"/>
+                    Command="{Binding CreateNewPhraseCommand}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+
+                    <fa:ImageAwesome Grid.Column="0" 
+                                     Icon="PlusCircle" 
+                                     Foreground="White" />
+
+                    <TextBlock Text="New Phrase"
+                               Grid.Column="2"/>
+
+                </Grid>
+            </Button>
         </Grid>
 
         <!--Center Row-->
@@ -83,10 +98,10 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Topic">
+                    <GridViewColumn Header="#">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="120" Text="{Binding Phrase.Topic}" />
+                                <TextBlock Width="50" Text="{Binding Position}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -94,15 +109,15 @@
                     <GridViewColumn Header="Content">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="370" Text="{Binding Phrase.Content}" />
+                                <TextBlock Width="400" Text="{Binding Content}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Created On">
+                    <GridViewColumn Header="Mean">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Width="160" Text="{Binding Phrase.CreatedAt}" />
+                                <TextBlock Width="400" Text="{Binding Mean}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -110,18 +125,21 @@
                     <GridViewColumn Header="">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Width="150" Orientation="Horizontal">
-                                    <Button Content="Edit"
-                                            Height="30"
+                                <StackPanel Width="100" Orientation="Horizontal">
+                                    <Button Height="30"
                                             Margin="0 0 5 0"
                                             Command="{Binding EditCommand}"
-                                            CommandParameter="{Binding Phrase.Id}"
-                                            Style="{StaticResource LightRaisedButton}"/>
-                                    <Button Content="Remove"
-                                            Height="30"
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource LightRaisedButton}">
+                                        <fa:ImageAwesome Icon="Pencil" Foreground="Black" />
+                                    </Button>
+
+                                    <Button Height="30"
                                             Command="{Binding DeleteCommand}"
-                                            CommandParameter="{Binding Phrase.Id}"
-                                            Style="{StaticResource DangerRaisedButton}"/>
+                                            CommandParameter="{Binding Id}"
+                                            Style="{StaticResource DangerRaisedButton}">
+                                        <fa:ImageAwesome Icon="Trash" Foreground="White" />
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
