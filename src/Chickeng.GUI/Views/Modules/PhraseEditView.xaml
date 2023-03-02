@@ -7,45 +7,48 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:cvt="clr-namespace:Chickeng.GUI.Converters"
              xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
-             mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="900">
+             mc:Ignorable="d">
     <UserControl.Resources>
-        <cvt:AntiBitToVisibilityConverter x:Key="AntiBitToVisibilityConverter" />
         <cvt:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <ScrollViewer Padding="20"
-                  VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto">
+    <Grid>
         <behaviors:Interaction.Triggers>
             <behaviors:EventTrigger EventName="Loaded">
                 <behaviors:InvokeCommandAction Command="{Binding LoadTargetItemCommand}" />
             </behaviors:EventTrigger>
         </behaviors:Interaction.Triggers>
-        <Grid Grid.IsSharedSizeScope="True">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+
+        <!--Left column-->
+        <!--Left loading-->
+        <Grid Grid.Column="0"
+              Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
+              Style="{StaticResource LoadingComponent}">
+            <fa:ImageAwesome />
+        </Grid>
+        
+        <Grid Grid.Column="0" 
+              Grid.IsSharedSizeScope="True">
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="50" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition SharedSizeGroup="FormControl" />
-                <RowDefinition Height="30" />
+                <RowDefinition SharedSizeGroup="FormControl" />
                 <RowDefinition Height="30" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
 
             <Grid.Resources>
@@ -58,56 +61,36 @@
                 </Style>
             </Grid.Resources>
 
-            <!--Form loading-->
-            <Grid Grid.Row="2"
-                  Grid.RowSpan="8"
-                  Grid.Column="1"
-                  Grid.ColumnSpan="3"
-                  Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"
-                  Style="{StaticResource LoadingComponent}">
-                <fa:ImageAwesome />
-            </Grid>
-            
             <!--Form Region-->
-            <TextBlock Grid.Row="1"
-                       Grid.Column="1"
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
                        Grid.ColumnSpan="3"
                        Foreground="#FF3E62D2"
                        FontWeight="DemiBold"
                        HorizontalAlignment="Center"
                        Text="{Binding Title}"/>
 
-            <shared:FloatLableTextBoxUC Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        Grid.Row="2"
+            <shared:FloatLableTextBoxUC Grid.Row="1"
                                         Placeholder="Content ..."
                                         FormValue="{Binding Content}"
                                         Lable="Content"/>
 
-            <shared:FloatLableTextBoxUC Grid.Column="1"
-                                        Grid.Row="3"
-                                        Grid.ColumnSpan="3"
+            <shared:FloatLableTextBoxUC Grid.Row="2"
                                         Placeholder="Mean ..."
                                         FormValue="{Binding Mean}"
                                         Lable="Mean"/>
 
-            <shared:FloatLableTextBoxUC Grid.Column="1"
-                                        Grid.Row="4"
-                                        Grid.ColumnSpan="3"
+            <shared:FloatLableTextBoxUC Grid.Row="3"
                                         Placeholder="Pronounce ..."
                                         FormValue="{Binding Pronounce}"
                                         Lable="Pronounce"/>
 
-            <shared:FloatLableTextBoxUC Grid.Column="1"
-                                        Grid.Row="5"
-                                        Grid.ColumnSpan="3"
+            <shared:FloatLableTextBoxUC Grid.Row="4"
                                         Placeholder="Tone ..."
                                         FormValue="{Binding Tone}"
                                         Lable="Tone"/>
 
-            <shared:FloatLableMultiLineTextBoxUC Grid.Column="1"
-                                        Grid.Row="6"
-                                        Grid.ColumnSpan="3"
+            <shared:FloatLableMultiLineTextBoxUC Grid.Row="5"
                                         Grid.RowSpan="2"
                                         MaxHeight="90"
                                         ControlMaxHeight="90"
@@ -117,29 +100,9 @@
             </shared:FloatLableMultiLineTextBoxUC>
 
 
-            <!--History Region-->
-            <TextBlock Grid.Row="1"
-                       Grid.Column="5"
-                       Grid.ColumnSpan="3"
-                       Foreground="#FF3E62D2"
-                       FontWeight="DemiBold"
-                       HorizontalAlignment="Center"
-                       Text="HISTORIES"/>
-            <ScrollViewer Grid.Row="2"
-                          Grid.RowSpan="6"
-                          Grid.Column="5"
-                          Grid.ColumnSpan="3"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <ListView BorderThickness="0.5"
-                          BorderBrush="LightGray">
+            
 
-                </ListView>
-            </ScrollViewer>
-
-            <StackPanel Grid.Row="9"
-                        Grid.Column="2"
-                        Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="8"
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <Button Content="Save" 
@@ -151,5 +114,28 @@
                         Style="{StaticResource InfoRaisedButton}" />
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+
+
+        <!--Right column-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+            <!--History Region-->
+            <TextBlock Grid.Row="0"
+                       Foreground="#FF3E62D2"
+                       FontWeight="DemiBold"
+                       HorizontalAlignment="Center"
+                       Text="HISTORIES"/>
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                <ListView BorderThickness="0.5"
+                          BorderBrush="LightGray">
+
+                </ListView>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
 </UserControl>
