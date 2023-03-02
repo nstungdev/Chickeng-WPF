@@ -93,8 +93,8 @@
 
             <shared:FloatLableMultiLineTextBoxUC Grid.Row="5"
                                         Grid.RowSpan="2"
-                                        MaxHeight="90"
-                                        ControlMaxHeight="90"
+                                        MaxHeight="80"
+                                        ControlMaxHeight="80"
                                         Placeholder="Note ..."
                                         FormValue="{Binding Note}"
                                         Lable="Note">
