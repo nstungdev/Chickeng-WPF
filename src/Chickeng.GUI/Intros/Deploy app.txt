@@ -8,3 +8,11 @@ S3: Add <RuntimeIdentifier>win-x64</RuntimeIdentifier>  <<on .csproj>>
 S4: RUN
 	git tag chickeng/v1.0.0
 	git push origin chickeng/v1.0.0
+
+
+
+Installer
+
+B1: Set appsetting.json ==> PROD
+
+B2: dotnet publish -c Release --self-contained -r win-x86 -p:PublishSingleFile=true
