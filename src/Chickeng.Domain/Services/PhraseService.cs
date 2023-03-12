@@ -70,7 +70,8 @@ namespace Chickeng.Domain.Services
             phraseInDB.Pronounce = phraseDTO.Pronounce;
             phraseInDB.Tone = phraseDTO.Tone;
             phraseInDB.LastUpdatedAt = DateTime.Now;
-
+            phraseInDB.Mean = phraseDTO.Mean;
+            
             await _dbContext.SaveChangesAsync();
         }
     }
