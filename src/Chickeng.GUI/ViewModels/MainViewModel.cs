@@ -12,6 +12,10 @@ namespace Chickeng.GUI.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly NavigationService<HomeViewModel> _navHome;
         #endregion
+
+        #region Normal fields
+        private bool _hasPreviousView = false;
+        #endregion
         public MainViewModel(NavigationStore navigationStore, 
             NavigationService<HomeViewModel> navHome)
         {
@@ -23,17 +27,20 @@ namespace Chickeng.GUI.ViewModels
             // commands
             QuitCommand = new AsyncCommand(QuitActionAsync);
             BackToHomeCommand = new AsyncCommand(BackToHomeActionAsync);
+            PreviousViewCommand = new AsyncCommand(BackToPreviousView);
         }
 
         #region Event Actions
         private void OnCurrentViewModelChanged()
         {
+            HasPreviousView = _navigationStore.HasPreviousModelView;
             OnPropertyChanged(nameof(CurrentViewModel));
         }
         #endregion
 
         #region Commands
         public ICommand BackToHomeCommand { get; }
+        public ICommand PreviousViewCommand { get; }
         public ICommand QuitCommand { get; }
         #endregion
 
@@ -54,6 +61,12 @@ namespace Chickeng.GUI.ViewModels
             Application.Current.Shutdown();
             return Task.CompletedTask;
         }
+
+        private Task BackToPreviousView(object? @param)
+        {
+            _navigationStore.ToPreviousViewModel();
+            return Task.CompletedTask;
+        }
         #endregion
 
         #region Properties
@@ -61,6 +74,15 @@ namespace Chickeng.GUI.ViewModels
         public double EffectHeight { get => 30; }
         public double OriginWidth { get => 25; }
         public double OriginHeight { get => 25; }
+        public bool HasPreviousView
+        {
+            get => _hasPreviousView;
+            set
+            {
+                _hasPreviousView = value;
+                OnPropertyChanged(nameof(HasPreviousView));
+            }
+        }
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         #endregion
     }

@@ -6,3 +6,12 @@ Dashboard GUI
 https://www.youtube.com/watch?v=mlmyFXJy8gQ
 https://github.com/sajjad-z/WPF-DataTable-Dashboard/blob/master/App.xaml
 https://github.com/MahApps/MahApps.Metro.IconPacks (List icon in Package MahApps.Metro.IconPacks)
+
+
+Icon
+Step 1: Download fontawesome 6 in https://fontawesome.com/
+Step 2: Import .otf file into the project
+	+ set BuildAction = resource
+	+ set Copy output directory = Copy always
+Step 3: Watch the website get unicode with format &#x[code];
+	Set font family of element = fontawesome path

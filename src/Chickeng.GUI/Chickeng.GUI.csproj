@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Font_Awesome_6.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="chickeng-icon.ico" />
   </ItemGroup>
 
@@ -27,6 +31,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Chickeng.Domain\Chickeng.Domain.csproj" />
     <ProjectReference Include="..\Chickeng.Infrastructure\Chickeng.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Font_Awesome_6.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
