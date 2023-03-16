@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chickeng.Infrastructure.Entities
 {
-    public class Vocabulary
+    public class WordExample
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required, MaxLength(100)]
-        public string? Word { get; set; }
-        [Required, MaxLength(255)]
+        [Required, MaxLength(500)]
+        public string? Value { get; set; }
+        [Required, MaxLength(500)]        
         public string? Mean { get; set; }
-        [Required, MaxLength(50)]
-        public string? WordType { get; set; }
-        public string? Pronounce { get; set; }
-        public string? Note { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? LastUpdatedAt { get; set; }
-        public int? TopicId { get; set; }
-        [ForeignKey("TopicId")]
-        public virtual Topic? Topic { get; set; }
     }
 }

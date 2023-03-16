@@ -21,11 +21,13 @@ namespace Chickeng.Infrastructure.DbContexts
         public DbSet<Vocabulary> Vocabularies { get; set; }
         public DbSet<Phrase> Phrases { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<WordExample> WordExamples { get; set; }
+        public DbSet<VocabularyHasExample> VocabularyHasExamples { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite(@"Data Source=D:\\MasterSpaces\\Projects\\chickeng\\db\\chickeng-dev.db");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite(@"Data Source=D:\\Hosting\\Tray1\\SQLite\\chickeng-dev.db");
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }
